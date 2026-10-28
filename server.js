@@ -24,7 +24,7 @@ const allowedItems = new Set([
 const allowedServices = new Set(["Dine-in", "Takeaway"]);
 const staticPages = new Set([
     "UR.JI.html", "menu.html", "login.html", "order.html", "owner.html",
-    "jimmy.jpg.jpg"
+    "jimmy.jpg.jpg", "table.jpg"
 ]);
 const rateLimits = new Map();
 

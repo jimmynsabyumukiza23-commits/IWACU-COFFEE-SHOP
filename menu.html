@@ -95,6 +95,59 @@
             text-align: center;
         }
 
+        .menu-welcome {
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(45, 27, 19, .2);
+            isolation: isolate;
+            margin: 0 0 48px;
+            min-height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .menu-welcome img {
+            display: block;
+            height: 100%;
+            inset: 0;
+            object-fit: cover;
+            object-position: center 56%;
+            position: absolute;
+            width: 100%;
+            z-index: -2;
+        }
+
+        .menu-welcome::after {
+            background: linear-gradient(90deg, rgba(35, 20, 12, .84), rgba(35, 20, 12, .34) 68%, rgba(35, 20, 12, .08));
+            content: "";
+            inset: 0;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .menu-welcome figcaption {
+            color: white;
+            max-width: 620px;
+            padding: clamp(32px, 7vw, 72px);
+            position: relative;
+        }
+
+        .menu-welcome .eyebrow {
+            color: #f2c891;
+        }
+
+        .menu-welcome h2 {
+            color: white;
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.12;
+            margin: 8px 0 12px;
+        }
+
+        .menu-welcome p:last-child {
+            color: #fff7ed;
+            font-size: 17px;
+            max-width: 470px;
+        }
+
         .eyebrow {
             color: #9b602f;
             font-size: 13px;
@@ -322,6 +375,20 @@
             main {
                 padding-top: 42px;
             }
+
+            .menu-welcome {
+                border-radius: 12px;
+                margin-bottom: 38px;
+                min-height: 340px;
+            }
+
+            .menu-welcome img {
+                object-position: 58% center;
+            }
+
+            .menu-welcome::after {
+                background: linear-gradient(0deg, rgba(35, 20, 12, .88), rgba(35, 20, 12, .12));
+            }
         }
     </style>
 </head>
@@ -339,6 +406,16 @@
     </header>
 
     <main>
+        <figure class="menu-welcome">
+            <img src="table.jpg" alt="A family sharing food and drinks around a restaurant table"
+                fetchpriority="high">
+            <figcaption>
+                <p class="eyebrow">Good food, shared together</p>
+                <h2>Make room for one more at the table</h2>
+                <p>Bring family and friends together over freshly prepared food, coffee, and warm service.</p>
+            </figcaption>
+        </figure>
+
         <header class="page-heading">
             <p class="eyebrow">Freshly prepared, made with care</p>
             <h1>Our Menu</h1>

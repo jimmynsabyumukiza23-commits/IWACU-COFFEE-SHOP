@@ -143,6 +143,14 @@
             text-align: center;
         }
 
+        .account-actions > button {
+            background: transparent;
+            color: #593521;
+            margin: 0;
+            padding: 6px;
+            text-decoration: underline;
+        }
+
         .account-actions button {
             background: transparent;
             color: #593521;
@@ -156,6 +164,30 @@
             color: white;
             margin-top: 10px;
             text-decoration: none;
+        }
+
+        .password-reset {
+            border-top: 1px solid #eee1d0;
+            margin-top: 18px;
+            padding-top: 18px;
+        }
+
+        .password-reset h2 {
+            color: #593521;
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .password-reset p {
+            color: #78665a;
+            margin-bottom: 14px;
+        }
+
+        .password-reset button[type="button"] {
+            background: transparent;
+            color: #593521;
+            margin-top: 8px;
+            text-decoration: underline;
         }
 
         .links {
@@ -218,7 +250,7 @@
                 <label for="email">Email address</label>
                 <input type="email" id="email" name="email" autocomplete="username" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="phone-group">
                 <label for="phone">Phone number</label>
                 <input type="tel" id="phone" name="phone" autocomplete="tel" required>
             </div>
@@ -233,8 +265,44 @@
 
         <div class="account-actions">
             <button type="button" id="mode-toggle">New customer? Create an account</button>
+            <button type="button" id="forgot-password-toggle">Forgot password?</button>
             <button type="button" class="sign-out-button" id="sign-out-button" hidden>Sign out</button>
         </div>
+
+        <section class="password-reset" id="password-reset-panel" aria-labelledby="password-reset-heading" hidden>
+            <h2 id="password-reset-heading">Reset your password</h2>
+            <p>Request a verification code by email. It expires after 10 minutes.</p>
+            <form id="reset-request-form">
+                <div class="form-group">
+                    <label for="reset-email">Email address</label>
+                    <input type="email" id="reset-email" autocomplete="email" required>
+                </div>
+                <button type="submit" id="send-reset-code">Send verification code</button>
+            </form>
+            <form id="reset-complete-form" hidden>
+                <div class="form-group">
+                    <label for="reset-confirm-email">Account email</label>
+                    <input type="email" id="reset-confirm-email" autocomplete="email" readonly required>
+                </div>
+                <div class="form-group">
+                    <label for="reset-code">8-digit verification code</label>
+                    <input type="text" id="reset-code" inputmode="numeric" autocomplete="one-time-code"
+                        pattern="[0-9]{8}" maxlength="8" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">New password</label>
+                    <input type="password" id="new-password" autocomplete="new-password"
+                        minlength="10" maxlength="128" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm new password</label>
+                    <input type="password" id="confirm-password" autocomplete="new-password"
+                        minlength="10" maxlength="128" required>
+                </div>
+                <button type="submit" id="reset-password-button">Update password</button>
+            </form>
+            <button type="button" id="back-to-login">Back to sign in</button>
+        </section>
 
         <p class="notice">Passwords are stored as secure hashes, not plain text. Use your account to verify yourself on future visits. Orders are saved for the shop to confirm by phone.</p>
         <p class="owner-contact">Need help? Call the owner: <a href="tel:+250799463436">0799463436</a></p>
@@ -248,6 +316,7 @@
     <script>
         const loginForm = document.getElementById("login-form");
         const phoneInput = document.getElementById("phone");
+        const phoneGroup = document.getElementById("phone-group");
         const loginStatus = document.getElementById("login-status");
         const nameGroup = document.getElementById("name-group");
         const nameInput = document.getElementById("name");
@@ -255,14 +324,30 @@
         const submitButton = document.getElementById("submit-button");
         const modeToggle = document.getElementById("mode-toggle");
         const signOutButton = document.getElementById("sign-out-button");
+        const forgotPasswordToggle = document.getElementById("forgot-password-toggle");
+        const resetPanel = document.getElementById("password-reset-panel");
+        const resetRequestForm = document.getElementById("reset-request-form");
+        const resetCompleteForm = document.getElementById("reset-complete-form");
+        const resetEmailInput = document.getElementById("reset-email");
+        const resetConfirmEmailInput = document.getElementById("reset-confirm-email");
+        const resetCodeInput = document.getElementById("reset-code");
+        const newPasswordInput = document.getElementById("new-password");
+        const confirmPasswordInput = document.getElementById("confirm-password");
+        const sendResetCodeButton = document.getElementById("send-reset-code");
+        const resetPasswordButton = document.getElementById("reset-password-button");
         let isRegisterMode = false;
 
         function setRegistrationMode(enabled) {
             isRegisterMode = enabled;
             nameGroup.hidden = !enabled;
             nameInput.required = enabled;
+            phoneGroup.hidden = !enabled;
+            phoneInput.required = enabled;
+            phoneInput.setCustomValidity("");
             passwordInput.autocomplete = enabled ? "new-password" : "current-password";
             submitButton.textContent = enabled ? "Create account" : "Sign in";
+            forgotPasswordToggle.hidden = enabled;
+            resetPanel.hidden = true;
             modeToggle.textContent = enabled
                 ? "Already have an account? Sign in"
                 : "New customer? Create an account";
@@ -270,6 +355,8 @@
                 ? "Choose a password with at least 10 characters."
                 : "";
         }
+
+        setRegistrationMode(false);
 
         async function sendApiRequest(path, payload) {
             const response = await fetch(path, {
@@ -301,6 +388,96 @@
             setRegistrationMode(!isRegisterMode);
         });
 
+        forgotPasswordToggle.addEventListener("click", function () {
+            resetPanel.hidden = false;
+            resetRequestForm.hidden = false;
+            resetCompleteForm.hidden = true;
+            resetEmailInput.value = document.getElementById("email").value.trim();
+            loginStatus.textContent = "";
+            resetEmailInput.focus();
+        });
+
+        document.getElementById("back-to-login").addEventListener("click", function () {
+            resetPanel.hidden = true;
+            resetRequestForm.reset();
+            resetCompleteForm.reset();
+            resetCompleteForm.hidden = true;
+            loginStatus.textContent = "";
+        });
+
+        resetRequestForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            if (!resetRequestForm.reportValidity()) return;
+
+            sendResetCodeButton.disabled = true;
+            loginStatus.textContent = "Requesting a verification code...";
+            try {
+                const result = await sendApiRequest("/api/password-reset/request", {
+                    email: resetEmailInput.value.trim()
+                });
+                resetConfirmEmailInput.value = resetEmailInput.value.trim();
+                resetCompleteForm.hidden = false;
+                loginStatus.textContent = result.message;
+                resetCodeInput.focus();
+            } catch (error) {
+                loginStatus.textContent = error.message.includes("Failed to fetch")
+                    ? "Cannot connect to the account server. Start the website server to request a reset code."
+                    : error.message;
+            } finally {
+                sendResetCodeButton.disabled = false;
+            }
+        });
+
+        confirmPasswordInput.addEventListener("input", function () {
+            confirmPasswordInput.setCustomValidity(
+                confirmPasswordInput.value === newPasswordInput.value
+                    ? ""
+                    : "The passwords do not match."
+            );
+        });
+
+        newPasswordInput.addEventListener("input", function () {
+            confirmPasswordInput.setCustomValidity(
+                !confirmPasswordInput.value || confirmPasswordInput.value === newPasswordInput.value
+                    ? ""
+                    : "The passwords do not match."
+            );
+        });
+
+        resetCompleteForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            confirmPasswordInput.setCustomValidity(
+                confirmPasswordInput.value === newPasswordInput.value
+                    ? ""
+                    : "The passwords do not match."
+            );
+            if (!resetCompleteForm.reportValidity()) return;
+
+            resetPasswordButton.disabled = true;
+            loginStatus.textContent = "Updating your password...";
+            try {
+                const result = await sendApiRequest("/api/password-reset/complete", {
+                    email: resetConfirmEmailInput.value.trim(),
+                    code: resetCodeInput.value.trim(),
+                    password: newPasswordInput.value
+                });
+                resetCompleteForm.reset();
+                resetCompleteForm.hidden = true;
+                resetRequestForm.reset();
+                resetPanel.hidden = true;
+                loginForm.reset();
+                setRegistrationMode(false);
+                loginStatus.textContent = result.message;
+                document.getElementById("email").focus();
+            } catch (error) {
+                loginStatus.textContent = error.message.includes("Failed to fetch")
+                    ? "Cannot connect to the account server. Please try again."
+                    : error.message;
+            } finally {
+                resetPasswordButton.disabled = false;
+            }
+        });
+
         phoneInput.addEventListener("input", function () {
             phoneInput.setCustomValidity("");
             loginStatus.textContent = "";
@@ -314,13 +491,14 @@
             event.preventDefault();
 
             const phone = phoneInput.value.trim();
-            const digitCount = phone.replace(/\D/g, "").length;
-            const phoneFormatIsValid = /^\+?[0-9\s().-]+$/.test(phone) &&
-                digitCount >= 7 && digitCount <= 15;
-
-            phoneInput.setCustomValidity(
-                phoneFormatIsValid ? "" : "Enter a phone number with 7 to 15 digits."
-            );
+            if (isRegisterMode) {
+                const digitCount = phone.replace(/\D/g, "").length;
+                const phoneFormatIsValid = /^\+?[0-9\s().-]+$/.test(phone) &&
+                    digitCount >= 7 && digitCount <= 15;
+                phoneInput.setCustomValidity(
+                    phoneFormatIsValid ? "" : "Enter a phone number with 7 to 15 digits."
+                );
+            }
 
             if (!loginForm.reportValidity()) {
                 return;
@@ -334,7 +512,7 @@
                     {
                         name: nameInput.value.trim(),
                         email: document.getElementById("email").value.trim(),
-                        phone: phone,
+                        ...(isRegisterMode ? { phone: phone } : {}),
                         password: passwordInput.value
                     }
                 );
@@ -342,6 +520,7 @@
                 loginForm.reset();
                 setRegistrationMode(false);
                 loginStatus.textContent = result.message;
+                window.location.assign("menu.html");
             } catch (error) {
                 loginStatus.textContent = error.message.includes("Failed to fetch")
                     ? "Cannot connect to the account server. Open PowerShell in the website folder and run node server.js."

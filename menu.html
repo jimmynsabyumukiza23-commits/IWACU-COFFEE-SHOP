@@ -146,6 +146,40 @@
             outline-offset: 1px;
         }
 
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px auto 0;
+            max-width: 760px;
+        }
+
+        .service-tag {
+            background: #f2e7da;
+            border: 1px solid #d7b893;
+            border-radius: 999px;
+            color: #593521;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+            padding: 8px 16px;
+            transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
+        }
+
+        .service-tag:hover,
+        .service-tag:focus-visible {
+            background: #e8d6ba;
+            border-color: #9b602f;
+            transform: translateY(-1px);
+        }
+
+        .service-tag.is-active {
+            background: #593521;
+            border-color: #593521;
+            color: white;
+        }
+
         #menu-search-status {
             color: #78665a;
             margin-top: 8px;
@@ -299,7 +333,6 @@
             <a href="/">Home</a>
             <a href="menu.html" aria-current="page">Our Menu</a>
             <a href="/#about">Our Story</a>
-            <a href="/#contact">Contact</a>
             <a class="login-button" href="login.html">Customer Login</a>
             <a class="owner-button" href="owner.html">Meet the Owner</a>
         </nav>
@@ -321,34 +354,42 @@
                 <input id="menu-search-input" type="search" autocomplete="off"
                     placeholder="Search coffee, food, or drinks">
             </div>
+            <div class="service-tags" aria-label="Iwami service options">
+                <button class="service-tag is-active" type="button" data-service="all">All services</button>
+                <button class="service-tag" type="button" data-service="Dine-in">Dine-in</button>
+                <button class="service-tag" type="button" data-service="Takeaway">Takeaway</button>
+                <button class="service-tag" type="button" data-service="Coffee">Coffee</button>
+                <button class="service-tag" type="button" data-service="Food">Food</button>
+                <button class="service-tag" type="button" data-service="Drinks">Drinks</button>
+            </div>
             <p id="menu-search-status" role="status" aria-live="polite"></p>
         </header>
 
         <section class="menu-category" aria-labelledby="coffee-heading">
             <h2 id="coffee-heading">☕ Coffee</h2>
             <div class="menu-grid">
-                <article class="menu-card">
+                <article class="menu-card" data-service="Coffee">
                     <div class="menu-icon" aria-hidden="true">☕</div>
                     <h3>Espresso</h3>
                     <p>Strong, rich coffee for a quick energy boost.</p>
                     <span class="price">1,500 RWF</span>
                     <a class="button" href="order.html?item=Espresso">Order this item</a>
                 </article>
-                <article class="menu-card">
+                <article class="menu-card" data-service="Coffee">
                     <div class="menu-icon" aria-hidden="true">🥛</div>
                     <h3>Cappuccino</h3>
                     <p>Espresso topped with steamed milk and a soft layer of foam.</p>
                     <span class="price">2,500 RWF</span>
                     <a class="button" href="order.html?item=Cappuccino">Order this item</a>
                 </article>
-                <article class="menu-card">
+                <article class="menu-card" data-service="Coffee">
                     <div class="menu-icon" aria-hidden="true">☕</div>
                     <h3>Café Latte</h3>
                     <p>Smooth espresso blended with creamy steamed milk.</p>
                     <span class="price">2,500 RWF</span>
                     <a class="button" href="order.html?item=Caf%C3%A9%20Latte">Order this item</a>
                 </article>
-                <article class="menu-card">
+                <article class="menu-card" data-service="Coffee">
                     <div class="menu-icon" aria-hidden="true">🧊</div>
                     <h3>Iced Coffee</h3>
                     <p>Chilled coffee served over ice for a refreshing pick-me-up.</p>
@@ -361,28 +402,28 @@
         <section class="menu-category" aria-labelledby="food-heading">
             <h2 id="food-heading">🍽️ Food &amp; pastries</h2>
             <div class="menu-grid">
-                <article class="menu-card">
+                <article class="menu-card" data-service="Food">
                     <div class="menu-icon" aria-hidden="true">🥪</div>
                     <h3>Sandwich</h3>
                     <p>A tasty, satisfying sandwich for breakfast or lunch.</p>
                     <span class="price">2,500 RWF</span>
                     <a class="button" href="order.html?item=Sandwich">Order this item</a>
                 </article>
-                <article class="menu-card">
+                <article class="menu-card" data-service="Food">
                     <div class="menu-icon" aria-hidden="true">🍳</div>
                     <h3>Eggs &amp; Bread</h3>
                     <p>A simple and comforting breakfast favorite.</p>
                     <span class="price">2,000 RWF</span>
                     <a class="button" href="order.html?item=Eggs%20%26%20Bread">Order this item</a>
                 </article>
-                <article class="menu-card">
+                <article class="menu-card" data-service="Food">
                     <div class="menu-icon" aria-hidden="true">🍟</div>
                     <h3>Chips</h3>
                     <p>Golden, crispy potato fries, served hot.</p>
                     <span class="price">2,000 RWF</span>
                     <a class="button" href="order.html?item=Chips">Order this item</a>
                 </article>
-                <article class="menu-card">
+                <article class="menu-card" data-service="Food">
                     <div class="menu-icon" aria-hidden="true">🥐</div>
                     <h3>Croissant</h3>
                     <p>A light, buttery pastry to enjoy with your coffee.</p>
@@ -395,28 +436,28 @@
         <section class="menu-category" aria-labelledby="drinks-heading">
             <h2 id="drinks-heading">🥤 Other drinks</h2>
             <div class="menu-grid">
-                <article class="menu-card">
+                <article class="menu-card" data-service="Drinks">
                     <div class="menu-icon" aria-hidden="true">🍵</div>
                     <h3>Tea</h3>
                     <p>A warm and comforting cup, any time of day.</p>
                     <span class="price">1,000 RWF</span>
                     <a class="button" href="order.html?item=Tea">Order this item</a>
                 </article>
-                <article class="menu-card">
+                <article class="menu-card" data-service="Drinks">
                     <div class="menu-icon" aria-hidden="true">🍋</div>
                     <h3>Lemon Juice</h3>
                     <p>A bright, refreshing citrus drink.</p>
                     <span class="price">1,500 RWF</span>
                     <a class="button" href="order.html?item=Lemon%20Juice">Order this item</a>
                 </article>
-                <article class="menu-card">
+                <article class="menu-card" data-service="Drinks">
                     <div class="menu-icon" aria-hidden="true">🥭</div>
                     <h3>Mango Juice</h3>
                     <p>Sweet, fruity mango juice, freshly served.</p>
                     <span class="price">2,000 RWF</span>
                     <a class="button" href="order.html?item=Mango%20Juice">Order this item</a>
                 </article>
-                <article class="menu-card">
+                <article class="menu-card" data-service="Drinks">
                     <div class="menu-icon" aria-hidden="true">💧</div>
                     <h3>Bottled Water</h3>
                     <p>A simple way to stay refreshed.</p>
@@ -438,8 +479,10 @@
         const menuSearchInput = document.getElementById("menu-search-input");
         const menuSearchStatus = document.getElementById("menu-search-status");
         const menuCategories = Array.from(document.querySelectorAll(".menu-category"));
+        const serviceButtons = Array.from(document.querySelectorAll(".service-tag"));
+        let activeService = "all";
 
-        menuSearchInput.addEventListener("input", function () {
+        function filterMenu() {
             const query = menuSearchInput.value.trim().toLocaleLowerCase();
             let visibleCardCount = 0;
 
@@ -447,21 +490,38 @@
                 let categoryHasMatch = false;
 
                 category.querySelectorAll(".menu-card").forEach(function (card) {
-                    const matches = card.textContent.toLocaleLowerCase().includes(query);
-                    card.hidden = !matches;
-                    categoryHasMatch = categoryHasMatch || matches;
-                    visibleCardCount += matches ? 1 : 0;
+                    const cardText = card.textContent.toLocaleLowerCase();
+                    const matchesQuery = !query || cardText.includes(query);
+                    const cardService = card.dataset.service || "";
+                    const matchesService = activeService === "all" || cardService === activeService;
+                    const shouldShow = matchesQuery && matchesService;
+                    card.hidden = !shouldShow;
+                    categoryHasMatch = categoryHasMatch || shouldShow;
+                    visibleCardCount += shouldShow ? 1 : 0;
                 });
 
                 category.hidden = !categoryHasMatch;
             });
 
-            menuSearchStatus.textContent = query
+            menuSearchStatus.textContent = query || activeService !== "all"
                 ? (visibleCardCount
                     ? visibleCardCount + (visibleCardCount === 1 ? " item found." : " items found.")
-                    : "No menu items match your search.")
+                    : "No menu items match your search and selected service.")
                 : "";
+        }
+
+        serviceButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                activeService = button.dataset.service;
+                serviceButtons.forEach(function (tag) {
+                    tag.classList.toggle("is-active", tag === button);
+                });
+                filterMenu();
+            });
         });
+
+        menuSearchInput.addEventListener("input", filterMenu);
+        filterMenu();
     </script>
 </body>
 

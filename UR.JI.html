@@ -207,6 +207,57 @@
             background: white;
         }
 
+        .coffee-moment {
+            background: #f3e8da;
+        }
+
+        .coffee-table {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            margin: 0 auto;
+            max-width: 860px;
+        }
+
+        .coffee-guest {
+            background: #fffdf9;
+            border: 1px solid #e3d2bd;
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .coffee-guest-icon {
+            display: block;
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .coffee-guest h3 {
+            color: #593521;
+        }
+
+        .coffee-cup-state {
+            color: #78665a;
+            margin-top: 8px;
+        }
+
+        .coffee-break-action {
+            margin-top: 26px;
+            text-align: center;
+        }
+
+        .coffee-break-action .button {
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .coffee-break-status {
+            color: #593521;
+            margin-top: 10px;
+            min-height: 24px;
+        }
+
         .menu-grid {
             display: grid;
             gap: 22px;
@@ -243,8 +294,8 @@
             align-items: center;
             background: #eee1d0;
             display: grid;
-            gap: 48px;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 32px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
         .about img {
@@ -290,6 +341,98 @@
             margin-top: 22px;
         }
 
+        .story-comments {
+            align-self: stretch;
+            background: #faf6ef;
+            border: 1px solid #e3d2bd;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .story-comments h3 {
+            color: #593521;
+            font-size: 21px;
+            margin-bottom: 6px;
+        }
+
+        .story-comments>p,
+        .comment-date {
+            color: #78665a;
+            font-size: 14px;
+        }
+
+        .comment-form {
+            display: grid;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .comment-form label {
+            color: #593521;
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            background: white;
+            border: 1px solid #cbb9a5;
+            border-radius: 6px;
+            color: #352219;
+            font: inherit;
+            padding: 10px 12px;
+            width: 100%;
+        }
+
+        .comment-form textarea {
+            min-height: 96px;
+            resize: vertical;
+        }
+
+        .comment-form button {
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .comment-form button:disabled {
+            cursor: wait;
+            opacity: .7;
+        }
+
+        .comment-status {
+            min-height: 24px;
+        }
+
+        .comment-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+            max-height: 360px;
+            overflow-y: auto;
+        }
+
+        .comment-item {
+            background: white;
+            border: 1px solid #eee1d0;
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .comment-item h4 {
+            color: #593521;
+            font-size: 15px;
+            overflow-wrap: anywhere;
+        }
+
+        .comment-item p {
+            color: #352219;
+            margin-top: 4px;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
         .contact {
             text-align: center;
         }
@@ -305,6 +448,16 @@
 
         .contact .button {
             margin-top: 20px;
+        }
+
+        .contact-map {
+            border: 0;
+            border-radius: 12px;
+            display: block;
+            height: 360px;
+            margin: 28px auto 0;
+            max-width: 760px;
+            width: 100%;
         }
 
         footer {
@@ -348,6 +501,16 @@
                 gap: 28px;
             }
         }
+
+        @media (min-width: 681px) and (max-width: 1100px) {
+            .about {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .story-comments {
+                grid-column: 1 / -1;
+            }
+        }
     </style>
 </head>
 
@@ -358,7 +521,6 @@
             <a href="/" aria-current="page">Home</a>
             <a href="menu.html">Our Menu</a>
             <a href="#about">Our Story</a>
-            <a href="#contact">Contact</a>
             <a class="login-button" href="login.html">Customer Login</a>
             <a class="owner-button" href="owner.html">Meet the Owner</a>
         </nav>
@@ -372,9 +534,41 @@
                 <p>Discover great coffee, delicious bites, and a warm welcome in Nyagatare, Rwanda.</p>
                 <a class="button" href="menu.html">Explore our menu</a>
                 <a class="button" href="tel:+250799463436">Call us</a>
-                <a class="button button-whatsapp"
-                    href="https://wa.me/250799463436?text=Hello%20Iwacu%20Coffee%20Shop"
+                <a class="button button-whatsapp" href="https://wa.me/250799463436?text=Hello%20Iwacu%20Coffee%20Shop"
                     target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            </div>
+        </section>
+
+        <section class="coffee-moment" aria-labelledby="coffee-moment-heading">
+            <div class="section-heading">
+                <p class="eyebrow">Coffee with friends</p>
+                <h2 id="coffee-moment-heading">A little coffee break together</h2>
+                <p>Alice, Bob, and Charlie are sharing a cup at the table. Enjoy the moment.</p>
+            </div>
+            <div class="coffee-table" id="coffee-table">
+                <article class="coffee-guest" data-person="Alice">
+                    <span class="coffee-guest-icon" aria-hidden="true">👩🏽‍🦱</span>
+                    <h3>Alice</h3>
+                    <p class="coffee-cup-state">☕ Full cup</p>
+                </article>
+                <article class="coffee-guest" data-person="Bob">
+                    <span class="coffee-guest-icon" aria-hidden="true">👨🏽‍🦱</span>
+                    <h3>Bob</h3>
+                    <p class="coffee-cup-state">☕ Full cup</p>
+                </article>
+                <article class="coffee-guest" data-person="Charlie">
+                    <span class="coffee-guest-icon" aria-hidden="true">🧑🏽</span>
+                    <h3>Charlie</h3>
+                    <p class="coffee-cup-state">☕ Full cup</p>
+                </article>
+            </div>
+            <div class="coffee-break-action">
+                <button class="button button-dark" id="coffee-break-button" type="button" aria-pressed="false">
+                    Drink coffee together
+                </button>
+                <p class="coffee-break-status" id="coffee-break-status" role="status" aria-live="polite">
+                    The cups are ready on the table.
+                </p>
             </div>
         </section>
 
@@ -440,8 +634,24 @@
                         <dd><a href="mailto:jimmynsabyumukiza23@gmail.com">jimmynsabyumukiza23@gmail.com</a></dd>
                     </div>
                 </dl>
-                <a class="button button-dark" href="#contact">Come visit us</a>
             </div>
+            <aside class="story-comments" aria-labelledby="story-comments-heading">
+                <h3 id="story-comments-heading">Share your thoughts</h3>
+                <p>Your comment and display name will be visible to everyone.</p>
+                <form class="comment-form" id="story-comment-form">
+                    <div>
+                        <label for="comment-name">Your name</label>
+                        <input id="comment-name" name="name" autocomplete="name" minlength="2" maxlength="60" required>
+                    </div>
+                    <div>
+                        <label for="comment-message">Comment</label>
+                        <textarea id="comment-message" name="message" maxlength="500" required></textarea>
+                    </div>
+                    <p class="comment-status" id="comment-status" role="status" aria-live="polite"></p>
+                    <button class="button button-dark" id="comment-submit" type="submit">Post comment</button>
+                </form>
+                <div class="comment-list" id="story-comment-list" aria-live="polite">Loading comments...</div>
+            </aside>
         </section>
 
         <section class="contact" id="contact">
@@ -450,14 +660,21 @@
                 <h2>Visit Iwacu Coffee Shop</h2>
                 <p>We look forward to welcoming you.</p>
             </div>
-            <p class="contact-details"><strong>Location:</strong> Nyagatare District, Rwanda</p>
+            <p class="contact-details"><strong>Location:</strong> Nyagatare town centre, near the car park (approximate
+                area)</p>
             <p class="contact-details"><strong>Phone:</strong> <a href="tel:+250799463436">0799463436</a></p>
             <p class="contact-details"><strong>Email:</strong> <a
                     href="mailto:jimmynsabyumukiza23@gmail.com">jimmynsabyumukiza23@gmail.com</a></p>
             <p class="contact-details"><strong>Opening hours:</strong> Open 24 hours</p>
-            <a class="button button-dark" href="https://www.google.com/maps/search/?api=1&amp;query=Nyagatare%2C+Rwanda"
+            <a class="button button-dark"
+                href="https://www.google.com/maps/search/?api=1&amp;query=Nyagatare+town+centre+car+park%2C+Rwanda"
                 target="_blank" rel="noopener noreferrer">Find us on Google Maps</a>
+            <iframe class="contact-map"
+                src="https://maps.google.com/maps?q=Nyagatare%20town%20centre%20car%20park%2C%20Rwanda&amp;output=embed"
+                title="Map of Nyagatare town centre near the car park" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         </section>
+
     </main>
 
     <footer>
@@ -466,6 +683,109 @@
     </footer>
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
+
+        const coffeeBreakButton = document.getElementById("coffee-break-button");
+        const coffeeBreakStatus = document.getElementById("coffee-break-status");
+        const coffeeGuests = Array.from(document.querySelectorAll(".coffee-guest"));
+
+        coffeeBreakButton.addEventListener("click", function () {
+            const coffeeIsFinished = coffeeBreakButton.getAttribute("aria-pressed") !== "true";
+            coffeeBreakButton.setAttribute("aria-pressed", String(coffeeIsFinished));
+            coffeeBreakButton.textContent = coffeeIsFinished
+                ? "Start the coffee break again"
+                : "Drink coffee together";
+
+            coffeeGuests.forEach(function (guest) {
+                guest.querySelector(".coffee-cup-state").textContent = coffeeIsFinished
+                    ? "☕ Empty cup on the table"
+                    : "☕ Full cup";
+            });
+
+            coffeeBreakStatus.textContent = coffeeIsFinished
+                ? "Alice, Bob, and Charlie enjoyed their coffee and placed their empty cups on the table."
+                : "The cups are ready on the table.";
+        });
+
+        const storyCommentForm = document.getElementById("story-comment-form");
+        const storyCommentList = document.getElementById("story-comment-list");
+        const storyCommentStatus = document.getElementById("comment-status");
+        const commentSubmitButton = document.getElementById("comment-submit");
+
+        function renderStoryComments(comments) {
+            storyCommentList.replaceChildren();
+            if (comments.length === 0) {
+                const emptyMessage = document.createElement("p");
+                emptyMessage.textContent = "No comments yet. Be the first to share a thought.";
+                storyCommentList.append(emptyMessage);
+                return;
+            }
+
+            for (const comment of comments) {
+                const article = document.createElement("article");
+                article.className = "comment-item";
+
+                const name = document.createElement("h4");
+                name.textContent = comment.name;
+                article.append(name);
+
+                const message = document.createElement("p");
+                message.textContent = comment.message;
+                article.append(message);
+
+                const date = document.createElement("time");
+                date.className = "comment-date";
+                date.dateTime = new Date(comment.createdAt).toISOString();
+                date.textContent = new Intl.DateTimeFormat(undefined, {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                }).format(new Date(comment.createdAt));
+                article.append(date);
+                storyCommentList.append(article);
+            }
+        }
+
+        async function loadStoryComments() {
+            try {
+                const response = await fetch("/api/story-comments");
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || "Comments could not be loaded.");
+                renderStoryComments(result.comments);
+            } catch {
+                storyCommentList.textContent = "Comments could not be loaded. Please refresh the page to try again.";
+            }
+        }
+
+        storyCommentForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            if (!storyCommentForm.reportValidity()) return;
+
+            commentSubmitButton.disabled = true;
+            storyCommentStatus.textContent = "Posting your comment...";
+            try {
+                const response = await fetch("/api/story-comments", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        name: document.getElementById("comment-name").value.trim(),
+                        message: document.getElementById("comment-message").value.trim()
+                    })
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || "Your comment could not be posted.");
+
+                storyCommentForm.reset();
+                storyCommentStatus.textContent = "Your comment is now visible to everyone.";
+                await loadStoryComments();
+            } catch (error) {
+                storyCommentStatus.textContent = error.message.includes("Failed to fetch")
+                    ? "The comment service is unavailable. Please try again later."
+                    : error.message;
+            } finally {
+                commentSubmitButton.disabled = false;
+            }
+        });
+
+        loadStoryComments();
     </script>
 </body>
 

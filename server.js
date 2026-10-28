@@ -1,4 +1,4 @@
-import { createHash, randomBytes, scrypt as scryptCallback, timingSafeEqual } from "node:crypto";
+import { createHash, randomBytes, randomInt, scrypt as scryptCallback, timingSafeEqual } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import { createServer } from "node:http";
 import { mkdirSync, readFileSync } from "node:fs";
@@ -13,6 +13,9 @@ const databasePath = join(dataDirectory, "iwacu.sqlite");
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || (process.env.NODE_ENV === "production" ? "0.0.0.0" : "127.0.0.1");
 const sessionDurationMs = 7 * 24 * 60 * 60 * 1000;
+const resetCodeDurationMs = 10 * 60 * 1000;
+const maxResetCodeAttempts = 5;
+const resetEmailMessage = "If an account exists for that email, a verification code has been sent.";
 const allowedItems = new Set([
     "Espresso", "Cappuccino", "Café Latte", "Iced Coffee", "Sandwich",
     "Eggs & Bread", "Chips", "Croissant", "Tea", "Lemon Juice",
@@ -51,6 +54,17 @@ database.exec(`
 
     CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expires_at);
 
+    CREATE TABLE IF NOT EXISTS password_reset_codes (
+        customer_id INTEGER PRIMARY KEY REFERENCES customers(id) ON DELETE CASCADE,
+        code_salt BLOB NOT NULL,
+        code_hash BLOB NOT NULL,
+        attempts INTEGER NOT NULL DEFAULT 0 CHECK(attempts BETWEEN 0 AND 5),
+        created_at INTEGER NOT NULL,
+        expires_at INTEGER NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS password_reset_codes_expiry ON password_reset_codes(expires_at);
+
     CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY,
         customer_id INTEGER NOT NULL REFERENCES customers(id),
@@ -58,6 +72,13 @@ database.exec(`
         quantity INTEGER NOT NULL CHECK(quantity BETWEEN 1 AND 100),
         service TEXT NOT NULL,
         notes TEXT NOT NULL DEFAULT '',
+        created_at INTEGER NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS story_comments (
+        id INTEGER PRIMARY KEY,
+        display_name TEXT NOT NULL,
+        message TEXT NOT NULL,
         created_at INTEGER NOT NULL
     );
 `);
@@ -78,10 +99,50 @@ const getSessionCustomer = database.prepare(`
     WHERE sessions.token_hash = ? AND sessions.expires_at > ?
 `);
 const deleteSession = database.prepare("DELETE FROM sessions WHERE token_hash = ?");
+const deleteCustomerSessions = database.prepare("DELETE FROM sessions WHERE customer_id = ?");
 const deleteExpiredSessions = database.prepare("DELETE FROM sessions WHERE expires_at <= ?");
+const updateCustomerPassword = database.prepare(
+    "UPDATE customers SET password_salt = ?, password_hash = ? WHERE id = ?"
+);
+const insertPasswordResetCode = database.prepare(`
+    INSERT INTO password_reset_codes (customer_id, code_salt, code_hash, attempts, created_at, expires_at)
+    VALUES (?, ?, ?, 0, ?, ?)
+    ON CONFLICT(customer_id) DO UPDATE SET
+        code_salt = excluded.code_salt,
+        code_hash = excluded.code_hash,
+        attempts = 0,
+        created_at = excluded.created_at,
+        expires_at = excluded.expires_at
+`);
+const getPasswordResetCode = database.prepare(`
+    SELECT customers.id AS customer_id, password_reset_codes.code_salt,
+        password_reset_codes.code_hash, password_reset_codes.attempts,
+        password_reset_codes.expires_at
+    FROM password_reset_codes
+    JOIN customers ON customers.id = password_reset_codes.customer_id
+    WHERE customers.email = ?
+`);
+const incrementPasswordResetAttempts = database.prepare(`
+    UPDATE password_reset_codes
+    SET attempts = attempts + 1
+    WHERE customer_id = ? AND expires_at > ? AND attempts < ?
+`);
+const deletePasswordResetCode = database.prepare(
+    "DELETE FROM password_reset_codes WHERE customer_id = ?"
+);
 const insertOrder = database.prepare(`
     INSERT INTO orders (customer_id, item, quantity, service, notes, created_at)
     VALUES (?, ?, ?, ?, ?, ?)
+`);
+const getStoryComments = database.prepare(`
+    SELECT id, display_name, message, created_at
+    FROM story_comments
+    ORDER BY created_at DESC, id DESC
+    LIMIT 50
+`);
+const insertStoryComment = database.prepare(`
+    INSERT INTO story_comments (display_name, message, created_at)
+    VALUES (?, ?, ?)
 `);
 
 function sendJson(response, statusCode, data, headers = {}) {
@@ -133,12 +194,13 @@ function clearSessionCookie(response) {
     );
 }
 
-function allowRequest(request, response, limit = 8) {
+function allowRequest(request, response, limit = 8, scope = "auth") {
     const address = request.socket.remoteAddress || "unknown";
     const now = Date.now();
-    const existing = rateLimits.get(address);
+    const key = `${scope}:${address}`;
+    const existing = rateLimits.get(key);
     if (!existing || now - existing.startedAt >= 15 * 60 * 1000) {
-        rateLimits.set(address, { startedAt: now, count: 1 });
+        rateLimits.set(key, { startedAt: now, count: 1 });
         return true;
     }
     existing.count += 1;
@@ -208,6 +270,38 @@ async function createCustomerSession(customerId, response) {
     setSessionCookie(response, token);
 }
 
+async function sendPasswordResetEmail(email, code) {
+    const apiKey = process.env.RESEND_API_KEY;
+    const from = process.env.EMAIL_FROM;
+    if (!apiKey || !from) {
+        const error = new Error("Password reset email is not configured.");
+        error.statusCode = 503;
+        throw error;
+    }
+
+    const result = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            from,
+            to: [email],
+            subject: "Your Iwacu Coffee Shop password reset code",
+            text: `Your password reset code is ${code}.\n\nIt expires in 10 minutes and can only be used once. If you did not request this code, you can ignore this email.`
+        }),
+        signal: AbortSignal.timeout(10000)
+    });
+
+    if (!result.ok) {
+        const error = new Error("Password reset email delivery failed.");
+        error.statusCode = 503;
+        error.deliveryFailure = true;
+        throw error;
+    }
+}
+
 function customerResponse(customer) {
     return {
         id: Number(customer.id),
@@ -222,6 +316,16 @@ async function handleApi(request, response, pathname) {
         return sendJson(response, 200, { status: "ok" });
     }
 
+    if (request.method === "GET" && pathname === "/api/story-comments") {
+        const comments = getStoryComments.all().map(comment => ({
+            id: Number(comment.id),
+            name: comment.display_name,
+            message: comment.message,
+            createdAt: Number(comment.created_at)
+        }));
+        return sendJson(response, 200, { comments });
+    }
+
     if (request.method === "GET" && pathname === "/api/me") {
         const customer = getAuthenticatedCustomer(request);
         if (!customer) return sendJson(response, 200, { customer: null });
@@ -230,6 +334,31 @@ async function handleApi(request, response, pathname) {
 
     if (request.method === "POST" && !verifySameOrigin(request)) {
         return sendJson(response, 403, { error: "Request origin was rejected." });
+    }
+
+    if (request.method === "POST" && pathname === "/api/story-comments") {
+        if (!allowRequest(request, response, 5, "story-comments")) return;
+        const body = await readJson(request);
+        const name = typeof body.name === "string" ? body.name.trim() : "";
+        const message = typeof body.message === "string" ? body.message.trim() : "";
+
+        if (name.length < 2 || name.length > 60) {
+            return sendJson(response, 400, { error: "Enter a name between 2 and 60 characters." });
+        }
+        if (!message || message.length > 500) {
+            return sendJson(response, 400, { error: "Enter a comment of 1 to 500 characters." });
+        }
+
+        const createdAt = Date.now();
+        const result = insertStoryComment.run(name, message, createdAt);
+        return sendJson(response, 201, {
+            comment: {
+                id: Number(result.lastInsertRowid),
+                name,
+                message,
+                createdAt
+            }
+        });
     }
 
     if (request.method === "POST" && pathname === "/api/register") {
@@ -267,17 +396,16 @@ async function handleApi(request, response, pathname) {
         if (!allowRequest(request, response)) return;
         const body = await readJson(request);
         const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
-        const phone = typeof body.phone === "string" ? body.phone.trim() : "";
         const password = typeof body.password === "string" ? body.password : "";
         const customer = getCustomerByEmail.get(email);
 
-        if (!customer || customer.phone !== phone || password.length > 128) {
-            return sendJson(response, 401, { error: "Email, phone number, or password is incorrect." });
+        if (!customer || password.length > 128) {
+            return sendJson(response, 401, { error: "Email or password is incorrect." });
         }
 
         const suppliedHash = await scrypt(password, customer.password_salt, 64);
         if (!timingSafeEqual(suppliedHash, customer.password_hash)) {
-            return sendJson(response, 401, { error: "Email, phone number, or password is incorrect." });
+            return sendJson(response, 401, { error: "Email or password is incorrect." });
         }
 
         await createCustomerSession(Number(customer.id), response);
@@ -286,6 +414,103 @@ async function handleApi(request, response, pathname) {
             message: "Signed in successfully.",
             customer: customerResponse(customer)
         });
+    }
+
+    if (request.method === "POST" && pathname === "/api/password-reset/request") {
+        if (!allowRequest(request, response, 3, "password-reset-request")) return;
+        const body = await readJson(request);
+        const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+        if (!validateEmail(email)) return sendJson(response, 400, { error: "Enter a valid email address." });
+
+        if (!process.env.RESEND_API_KEY || !process.env.EMAIL_FROM) {
+            return sendJson(response, 503, {
+                error: "Password reset email is not configured yet. Please contact the shop for help."
+            });
+        }
+
+        const customer = getCustomerByEmail.get(email);
+        if (!customer) return sendJson(response, 200, { message: resetEmailMessage });
+
+        const code = String(randomInt(0, 100000000)).padStart(8, "0");
+        const salt = randomBytes(16);
+        const codeHash = await scrypt(code, salt, 64);
+        const now = Date.now();
+        insertPasswordResetCode.run(
+            Number(customer.id), salt, codeHash, now, now + resetCodeDurationMs
+        );
+
+        try {
+            await sendPasswordResetEmail(email, code);
+        } catch (error) {
+            deletePasswordResetCode.run(Number(customer.id));
+            if (error.deliveryFailure || error.statusCode !== 503) {
+                console.error("Password reset email delivery failed:", error.message);
+            }
+            return sendJson(response, 503, {
+                error: "Password reset email could not be sent right now. Please try again later."
+            });
+        }
+
+        return sendJson(response, 200, { message: resetEmailMessage });
+    }
+
+    if (request.method === "POST" && pathname === "/api/password-reset/complete") {
+        if (!allowRequest(request, response, 8, "password-reset-complete")) return;
+        const body = await readJson(request);
+        const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+        const code = typeof body.code === "string" ? body.code.trim() : "";
+        const password = typeof body.password === "string" ? body.password : "";
+
+        if (!validateEmail(email)) return sendJson(response, 400, { error: "Enter a valid email address." });
+        if (!/^\d{8}$/.test(code)) {
+            return sendJson(response, 400, { error: "Enter the 8-digit verification code from your email." });
+        }
+        if (password.length < 10 || password.length > 128) {
+            return sendJson(response, 400, { error: "Password must be between 10 and 128 characters." });
+        }
+
+        const reset = getPasswordResetCode.get(email);
+        if (!reset || reset.expires_at <= Date.now() || reset.attempts >= maxResetCodeAttempts) {
+            if (reset) deletePasswordResetCode.run(Number(reset.customer_id));
+            return sendJson(response, 400, { error: "The code is invalid or expired. Request a new code." });
+        }
+
+        const incremented = incrementPasswordResetAttempts.run(
+            Number(reset.customer_id), Date.now(), maxResetCodeAttempts
+        );
+        if (incremented.changes !== 1) {
+            return sendJson(response, 400, { error: "The code is invalid or expired. Request a new code." });
+        }
+
+        const suppliedHash = await scrypt(code, reset.code_salt, 64);
+        if (!timingSafeEqual(suppliedHash, reset.code_hash)) {
+            if (reset.attempts + 1 >= maxResetCodeAttempts) {
+                deletePasswordResetCode.run(Number(reset.customer_id));
+            }
+            return sendJson(response, 400, { error: "The code is invalid or expired. Request a new code." });
+        }
+
+        const passwordSalt = randomBytes(16);
+        const passwordHash = await scrypt(password, passwordSalt, 64);
+        database.exec("BEGIN IMMEDIATE");
+        try {
+            const currentReset = getPasswordResetCode.get(email);
+            if (!currentReset ||
+                currentReset.expires_at <= Date.now() ||
+                !timingSafeEqual(currentReset.code_hash, reset.code_hash)) {
+                database.exec("ROLLBACK");
+                return sendJson(response, 400, { error: "The code is invalid or expired. Request a new code." });
+            }
+            updateCustomerPassword.run(passwordSalt, passwordHash, Number(reset.customer_id));
+            deleteCustomerSessions.run(Number(reset.customer_id));
+            deletePasswordResetCode.run(Number(reset.customer_id));
+            database.exec("COMMIT");
+        } catch (error) {
+            database.exec("ROLLBACK");
+            throw error;
+        }
+
+        return sendJson(response, 200, { message: "Password updated. Sign in with your new password." });
     }
 
     if (request.method === "POST" && pathname === "/api/logout") {

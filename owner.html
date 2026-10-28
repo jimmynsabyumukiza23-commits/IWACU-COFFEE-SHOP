@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meet the owner of Iwacu Coffee Shop in Nyagatare, Rwanda.">
+    <title>Meet the Owner | Iwacu Coffee Shop</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #faf6ef;
+            color: #352219;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .site-header {
+            align-items: center;
+            background: #2d1b13;
+            display: flex;
+            justify-content: space-between;
+            padding: 18px 7%;
+        }
+
+        .logo {
+            color: #e9bb82;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .site-nav {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .site-nav a {
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .site-nav a:hover,
+        .site-nav a:focus-visible {
+            color: #e9bb82;
+        }
+
+        main {
+            margin: 0 auto;
+            max-width: 1050px;
+            padding: 64px 6%;
+        }
+
+        .owner-access {
+            margin: 0 auto;
+            max-width: 480px;
+            padding: 64px 6%;
+        }
+
+        .access-card {
+            background: white;
+            border: 1px solid #eee1d0;
+            border-radius: 12px;
+            box-shadow: 0 12px 38px rgba(53, 34, 25, .1);
+            padding: 30px;
+        }
+
+        .access-card h1 {
+            color: #593521;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .access-card p {
+            color: #78665a;
+            margin-bottom: 18px;
+        }
+
+        .access-card .security-note {
+            font-size: 13px;
+            margin: 18px 0 0;
+        }
+
+        .access-card label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .access-card input {
+            border: 1px solid #d6c6b7;
+            border-radius: 6px;
+            font: inherit;
+            padding: 11px 12px;
+            width: 100%;
+        }
+
+        .access-card button {
+            background: #593521;
+            border: 0;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+            margin-top: 14px;
+            padding: 11px 16px;
+        }
+
+        #owner-access-status {
+            color: #8a2f20;
+            margin: 12px 0 0;
+        }
+
+        .owner-card {
+            align-items: center;
+            background: white;
+            border: 1px solid #eee1d0;
+            border-radius: 16px;
+            box-shadow: 0 12px 38px rgba(53, 34, 25, .1);
+            display: grid;
+            gap: 48px;
+            grid-template-columns: minmax(240px, .85fr) 1.15fr;
+            overflow: hidden;
+            padding: 36px;
+        }
+
+        .owner-photo {
+            border-radius: 12px;
+            display: block;
+            max-height: 480px;
+            min-height: 320px;
+            object-fit: cover;
+            object-position: center;
+            width: 100%;
+        }
+
+        .eyebrow {
+            color: #9b602f;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            color: #593521;
+            font-size: clamp(32px, 5vw, 46px);
+            line-height: 1.15;
+            margin: 10px 0 14px;
+        }
+
+        .intro {
+            color: #78665a;
+            margin-bottom: 26px;
+        }
+
+        .details {
+            border-top: 1px solid #eee1d0;
+        }
+
+        .detail-row {
+            border-bottom: 1px solid #eee1d0;
+            display: grid;
+            gap: 8px;
+            grid-template-columns: 130px 1fr;
+            padding: 13px 0;
+        }
+
+        .detail-row dt {
+            color: #593521;
+            font-weight: 700;
+        }
+
+        .detail-row dd {
+            color: #5b514a;
+            overflow-wrap: anywhere;
+        }
+
+        .detail-row a {
+            color: #80502e;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .button {
+            background: #593521;
+            border: 2px solid #593521;
+            border-radius: 6px;
+            color: white;
+            display: inline-block;
+            font-weight: 700;
+            padding: 10px 16px;
+            text-decoration: none;
+        }
+
+        .button:hover,
+        .button:focus-visible {
+            background: #8a5837;
+            border-color: #8a5837;
+        }
+
+        .button-outline {
+            background: white;
+            color: #593521;
+        }
+
+        footer {
+            background: #2d1b13;
+            color: #f8eee2;
+            padding: 24px 6%;
+            text-align: center;
+        }
+
+        footer span {
+            color: #e9bb82;
+        }
+
+        :focus-visible {
+            outline: 3px solid #c58b53;
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 700px) {
+            .site-header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 18px 6%;
+            }
+
+            .site-nav {
+                justify-content: center;
+                gap: 12px 18px;
+            }
+
+            main {
+                padding: 38px 5%;
+            }
+
+            .owner-card {
+                gap: 26px;
+                grid-template-columns: 1fr;
+                padding: 22px;
+            }
+
+            .owner-photo {
+                max-height: 420px;
+                min-height: 0;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .detail-row {
+                grid-template-columns: 1fr;
+                gap: 2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="logo" href="/">☕ IWACU COFFEE SHOP</a>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a href="menu.html">Our Menu</a>
+            <a href="login.html">Customer Login</a>
+        </nav>
+    </header>
+
+    <main class="owner-access" id="owner-access">
+        <section class="access-card" aria-labelledby="access-heading">
+            <h1 id="access-heading">Owner access</h1>
+            <p>Enter the owner password to view this page.</p>
+            <form id="owner-access-form">
+                <label for="owner-password">Password</label>
+                <input id="owner-password" name="password" type="password" autocomplete="current-password" required>
+                <button type="submit">Continue</button>
+                <p id="owner-access-status" role="status" aria-live="polite"></p>
+            </form>
+            <p class="security-note">This static-page password is only a casual barrier, not secure authentication.</p>
+        </section>
+    </main>
+
+    <main id="owner-content" hidden>
+        <article class="owner-card">
+            <img class="owner-photo" src="jimmy.jpg.jpg" alt="Portrait of Iwacu Coffee Shop owner NSABYUMUKIZA JIMMY">
+            <div>
+                <p class="eyebrow">The person behind Iwacu</p>
+                <h1>Meet the Owner</h1>
+                <p class="intro">Hello, I’m NSABYUMUKIZA JIMMY, owner of Iwacu Coffee Shop. I’m proud to welcome you
+                    and share the warm hospitality of Nyagatare.</p>
+                <dl class="details">
+                    <div class="detail-row">
+                        <dt>Name</dt>
+                        <dd>NSABYUMUKIZA JIMMY</dd>
+                    </div>
+                    <div class="detail-row">
+                        <dt>Date of birth</dt>
+                        <dd>02/02/2008</dd>
+                    </div>
+                    <div class="detail-row">
+                        <dt>Email</dt>
+                        <dd><a href="mailto:jimmynsabyumukiza23@gmail.com">jimmynsabyumukiza23@gmail.com</a></dd>
+                    </div>
+                    <div class="detail-row">
+                        <dt>Phone</dt>
+                        <dd><a href="tel:+250799463436">0799463436</a></dd>
+                    </div>
+                    <div class="detail-row">
+                        <dt>Alternate phone</dt>
+                        <dd><a href="tel:+250739994633">0739994633</a></dd>
+                    </div>
+                </dl>
+                <div class="actions">
+                    <a class="button" href="tel:+250799463436">Call the owner</a>
+                    <a class="button button-outline" href="/">Back to home</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer id="owner-footer" hidden>
+        <p>© <span id="year"></span> <span>Iwacu Coffee Shop</span>. Made with love in Rwanda.</p>
+        <p>Made by NSA.JIMMY</p>
+    </footer>
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        document.getElementById("owner-access-form").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const password = document.getElementById("owner-password").value;
+            const passwordBytes = new TextEncoder().encode(password);
+            const digest = await crypto.subtle.digest("SHA-256", passwordBytes);
+            const passwordHash = Array.from(new Uint8Array(digest), function (byte) {
+                return byte.toString(16).padStart(2, "0");
+            }).join("");
+
+            if (passwordHash === "f92d264fd3beeae0cfd036f8b1268e6280b8706a80f2bc4ca78ed3315f18027a") {
+                document.getElementById("owner-access").hidden = true;
+                document.getElementById("owner-content").hidden = false;
+                document.getElementById("owner-footer").hidden = false;
+                return;
+            }
+
+            document.getElementById("owner-access-status").textContent = "Incorrect password. Please try again.";
+        });
+    </script>
+</body>
+
+</html>

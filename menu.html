@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse coffee, food, and drinks at Iwacu Coffee Shop in Nyagatare, Rwanda.">
+    <title>Our Menu | Iwacu Coffee Shop</title>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Our Menu | Iwacu Coffee Shop">
+    <meta property="og:description" content="Browse coffee, food, and drinks at Iwacu Coffee Shop in Nyagatare, Rwanda.">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #faf6ef;
+            color: #352219;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .site-header {
+            align-items: center;
+            background: #2d1b13;
+            color: white;
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            padding: 18px 7%;
+        }
+
+        .logo {
+            color: #e9bb82;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .site-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+        }
+
+        .site-nav a {
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .site-nav a:hover,
+        .site-nav a:focus-visible {
+            color: #e9bb82;
+        }
+
+        .site-nav .login-button {
+            background: #c58b53;
+            border-radius: 6px;
+            color: #25170f;
+            padding: 9px 15px;
+        }
+
+        .site-nav .login-button:hover,
+        .site-nav .login-button:focus-visible {
+            background: #e9bb82;
+            color: #25170f;
+        }
+
+        .site-nav .owner-button {
+            border: 1px solid #e9bb82;
+            border-radius: 6px;
+            color: #e9bb82;
+            padding: 8px 14px;
+        }
+
+        .site-nav .owner-button:hover,
+        .site-nav .owner-button:focus-visible {
+            background: #e9bb82;
+            color: #25170f;
+        }
+
+        main {
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 58px 6% 72px;
+        }
+
+        .page-heading {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            color: #9b602f;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #593521;
+        }
+
+        .page-heading h1 {
+            font-size: clamp(36px, 5vw, 48px);
+            line-height: 1.2;
+            margin: 8px 0;
+        }
+
+        .page-heading > p:last-child {
+            color: #78665a;
+        }
+
+        .menu-search {
+            margin: 22px auto 0;
+            max-width: 460px;
+            text-align: left;
+        }
+
+        .menu-search label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .menu-search input {
+            background: white;
+            border: 1px solid #d6c6b7;
+            border-radius: 6px;
+            font: inherit;
+            padding: 11px 12px;
+            width: 100%;
+        }
+
+        .menu-search input:focus {
+            border-color: #9b602f;
+            outline: 2px solid #c58b53;
+            outline-offset: 1px;
+        }
+
+        #menu-search-status {
+            color: #78665a;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .menu-category {
+            margin-bottom: 44px;
+        }
+
+        .menu-category h2 {
+            border-bottom: 2px solid #c58b53;
+            font-size: 26px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+        }
+
+        .menu-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .menu-card {
+            background: white;
+            border: 1px solid #eee1d0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(53, 34, 25, .06);
+            display: flex;
+            flex-direction: column;
+            padding: 22px;
+        }
+
+        .menu-card[hidden],
+        .menu-category[hidden] {
+            display: none;
+        }
+
+        .menu-icon {
+            font-size: 32px;
+        }
+
+        .menu-card h3 {
+            margin: 7px 0 4px;
+        }
+
+        .menu-card p {
+            color: #78665a;
+            font-size: 14px;
+        }
+
+        .price {
+            color: #9b602f;
+            font-weight: 700;
+            margin: 12px 0;
+        }
+
+        .button {
+            background: #593521;
+            border: 2px solid #593521;
+            border-radius: 6px;
+            color: white;
+            display: inline-block;
+            font-weight: 700;
+            margin-top: auto;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .button:hover,
+        .button:focus-visible {
+            background: #8a5837;
+            border-color: #8a5837;
+        }
+
+        .menu-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .menu-contact .button {
+            margin-top: 0;
+        }
+
+        .menu-contact .button-whatsapp {
+            background: #16834a;
+            border-color: #16834a;
+        }
+
+        .menu-contact .button-whatsapp:hover,
+        .menu-contact .button-whatsapp:focus-visible {
+            background: #116b3b;
+            border-color: #116b3b;
+        }
+
+        .back-home {
+            color: #593521;
+            display: inline-block;
+            font-weight: 700;
+            margin-top: 6px;
+            text-decoration: none;
+        }
+
+        .back-home:hover,
+        .back-home:focus-visible {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #2d1b13;
+            color: #f8eee2;
+            padding: 24px 6%;
+            text-align: center;
+        }
+
+        footer span {
+            color: #e9bb82;
+        }
+
+        :focus-visible {
+            outline: 3px solid #c58b53;
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 680px) {
+            .site-header {
+                flex-direction: column;
+                padding: 18px 6%;
+            }
+
+            .site-nav {
+                justify-content: center;
+                gap: 12px 18px;
+            }
+
+            main {
+                padding-top: 42px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="logo" href="/">☕ IWACU COFFEE SHOP</a>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a href="menu.html" aria-current="page">Our Menu</a>
+            <a href="/#about">Our Story</a>
+            <a href="/#contact">Contact</a>
+            <a class="login-button" href="login.html">Customer Login</a>
+            <a class="owner-button" href="owner.html">Meet the Owner</a>
+        </nav>
+    </header>
+
+    <main>
+        <header class="page-heading">
+            <p class="eyebrow">Freshly prepared, made with care</p>
+            <h1>Our Menu</h1>
+            <p>Find your new favorite at Iwacu. Prices are shown in Rwandan francs.</p>
+            <div class="menu-contact" aria-label="Contact Iwacu Coffee Shop">
+                <a class="button" href="tel:+250799463436">Call us</a>
+                <a class="button button-whatsapp"
+                    href="https://wa.me/250799463436?text=Hello%20Iwacu%20Coffee%20Shop"
+                    target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            </div>
+            <div class="menu-search">
+                <label for="menu-search-input">Search the menu</label>
+                <input id="menu-search-input" type="search" autocomplete="off"
+                    placeholder="Search coffee, food, or drinks">
+            </div>
+            <p id="menu-search-status" role="status" aria-live="polite"></p>
+        </header>
+
+        <section class="menu-category" aria-labelledby="coffee-heading">
+            <h2 id="coffee-heading">☕ Coffee</h2>
+            <div class="menu-grid">
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">☕</div>
+                    <h3>Espresso</h3>
+                    <p>Strong, rich coffee for a quick energy boost.</p>
+                    <span class="price">1,500 RWF</span>
+                    <a class="button" href="order.html?item=Espresso">Order this item</a>
+                </article>
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">🥛</div>
+                    <h3>Cappuccino</h3>
+                    <p>Espresso topped with steamed milk and a soft layer of foam.</p>
+                    <span class="price">2,500 RWF</span>
+                    <a class="button" href="order.html?item=Cappuccino">Order this item</a>
+                </article>
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">☕</div>
+                    <h3>Café Latte</h3>
+                    <p>Smooth espresso blended with creamy steamed milk.</p>
+                    <span class="price">2,500 RWF</span>
+                    <a class="button" href="order.html?item=Caf%C3%A9%20Latte">Order this item</a>
+                </article>
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">🧊</div>
+                    <h3>Iced Coffee</h3>
+                    <p>Chilled coffee served over ice for a refreshing pick-me-up.</p>
+                    <span class="price">2,000 RWF</span>
+                    <a class="button" href="order.html?item=Iced%20Coffee">Order this item</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="menu-category" aria-labelledby="food-heading">
+            <h2 id="food-heading">🍽️ Food &amp; pastries</h2>
+            <div class="menu-grid">
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">🥪</div>
+                    <h3>Sandwich</h3>
+                    <p>A tasty, satisfying sandwich for breakfast or lunch.</p>
+                    <span class="price">2,500 RWF</span>
+                    <a class="button" href="order.html?item=Sandwich">Order this item</a>
+                </article>
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">🍳</div>
+                    <h3>Eggs &amp; Bread</h3>
+                    <p>A simple and comforting breakfast favorite.</p>
+                    <span class="price">2,000 RWF</span>
+                    <a class="button" href="order.html?item=Eggs%20%26%20Bread">Order this item</a>
+                </article>
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">🍟</div>
+                    <h3>Chips</h3>
+                    <p>Golden, crispy potato fries, served hot.</p>
+                    <span class="price">2,000 RWF</span>
+                    <a class="button" href="order.html?item=Chips">Order this item</a>
+                </article>
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">🥐</div>
+                    <h3>Croissant</h3>
+                    <p>A light, buttery pastry to enjoy with your coffee.</p>
+                    <span class="price">1,500 RWF</span>
+                    <a class="button" href="order.html?item=Croissant">Order this item</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="menu-category" aria-labelledby="drinks-heading">
+            <h2 id="drinks-heading">🥤 Other drinks</h2>
+            <div class="menu-grid">
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">🍵</div>
+                    <h3>Tea</h3>
+                    <p>A warm and comforting cup, any time of day.</p>
+                    <span class="price">1,000 RWF</span>
+                    <a class="button" href="order.html?item=Tea">Order this item</a>
+                </article>
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">🍋</div>
+                    <h3>Lemon Juice</h3>
+                    <p>A bright, refreshing citrus drink.</p>
+                    <span class="price">1,500 RWF</span>
+                    <a class="button" href="order.html?item=Lemon%20Juice">Order this item</a>
+                </article>
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">🥭</div>
+                    <h3>Mango Juice</h3>
+                    <p>Sweet, fruity mango juice, freshly served.</p>
+                    <span class="price">2,000 RWF</span>
+                    <a class="button" href="order.html?item=Mango%20Juice">Order this item</a>
+                </article>
+                <article class="menu-card">
+                    <div class="menu-icon" aria-hidden="true">💧</div>
+                    <h3>Bottled Water</h3>
+                    <p>A simple way to stay refreshed.</p>
+                    <span class="price">500 RWF</span>
+                    <a class="button" href="order.html?item=Bottled%20Water">Order this item</a>
+                </article>
+            </div>
+        </section>
+
+        <a class="back-home" href="/">← Back to home</a>
+    </main>
+
+    <footer>
+        <p>© <span id="year"></span> <span>Iwacu Coffee Shop</span>. Made with love in Rwanda.</p>
+    </footer>
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        const menuSearchInput = document.getElementById("menu-search-input");
+        const menuSearchStatus = document.getElementById("menu-search-status");
+        const menuCategories = Array.from(document.querySelectorAll(".menu-category"));
+
+        menuSearchInput.addEventListener("input", function () {
+            const query = menuSearchInput.value.trim().toLocaleLowerCase();
+            let visibleCardCount = 0;
+
+            menuCategories.forEach(function (category) {
+                let categoryHasMatch = false;
+
+                category.querySelectorAll(".menu-card").forEach(function (card) {
+                    const matches = card.textContent.toLocaleLowerCase().includes(query);
+                    card.hidden = !matches;
+                    categoryHasMatch = categoryHasMatch || matches;
+                    visibleCardCount += matches ? 1 : 0;
+                });
+
+                category.hidden = !categoryHasMatch;
+            });
+
+            menuSearchStatus.textContent = query
+                ? (visibleCardCount
+                    ? visibleCardCount + (visibleCardCount === 1 ? " item found." : " items found.")
+                    : "No menu items match your search.")
+                : "";
+        });
+    </script>
+</body>
+
+</html>

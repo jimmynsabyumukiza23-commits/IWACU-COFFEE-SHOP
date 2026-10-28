@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prepare an order request for Iwacu Coffee Shop in Nyagatare, Rwanda.">
+    <title>Order | Iwacu Coffee Shop</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #faf6ef;
+            color: #352219;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .site-header {
+            align-items: center;
+            background: #2d1b13;
+            display: flex;
+            justify-content: space-between;
+            padding: 18px 7%;
+        }
+
+        .logo {
+            color: #e9bb82;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .site-nav {
+            display: flex;
+            gap: 22px;
+        }
+
+        .site-nav a {
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .site-nav a:hover,
+        .site-nav a:focus-visible {
+            color: #e9bb82;
+        }
+
+        .site-nav .login-button {
+            background: #c58b53;
+            border-radius: 6px;
+            color: #25170f;
+            padding: 9px 15px;
+        }
+
+        .site-nav .login-button:hover,
+        .site-nav .login-button:focus-visible {
+            background: #e9bb82;
+            color: #25170f;
+        }
+
+        .site-nav .owner-button {
+            border: 1px solid #e9bb82;
+            border-radius: 6px;
+            color: #e9bb82;
+            padding: 8px 14px;
+        }
+
+        .site-nav .owner-button:hover,
+        .site-nav .owner-button:focus-visible {
+            background: #e9bb82;
+            color: #25170f;
+        }
+
+        main {
+            padding: 54px 15px 70px;
+        }
+
+        .order-box {
+            background: white;
+            border: 1px solid #eee1d0;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(53, 34, 25, .1);
+            margin: 0 auto;
+            max-width: 620px;
+            padding: 32px;
+        }
+
+        h1 {
+            color: #593521;
+            font-size: 34px;
+            text-align: center;
+        }
+
+        .description {
+            color: #78665a;
+            margin-bottom: 26px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select,
+        textarea {
+            background: #fffdf9;
+            border: 1px solid #d6c6b7;
+            border-radius: 6px;
+            font: inherit;
+            padding: 11px 12px;
+            width: 100%;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #9b602f;
+            outline: 2px solid #c58b53;
+            outline-offset: 1px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background: #593521;
+            border: 0;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+            padding: 13px 18px;
+            width: 100%;
+        }
+
+        button:hover,
+        button:focus-visible {
+            background: #8a5837;
+        }
+
+        #status {
+            color: #593521;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .back-link {
+            color: #593521;
+            display: block;
+            font-weight: 700;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .back-link:hover,
+        .back-link:focus-visible {
+            text-decoration: underline;
+        }
+
+        :focus-visible {
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 600px) {
+            .site-header {
+                align-items: center;
+                flex-direction: column;
+                gap: 12px;
+                padding: 18px 6%;
+            }
+
+            .site-nav {
+                flex-wrap: wrap;
+                gap: 12px 18px;
+                justify-content: center;
+            }
+
+            .order-box {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="logo" href="/">☕ IWACU COFFEE SHOP</a>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a href="menu.html">Our Menu</a>
+            <a class="login-button" href="login.html">Customer Login</a>
+            <a class="owner-button" href="owner.html">Meet the Owner</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="order-box" aria-labelledby="order-heading">
+            <h1 id="order-heading">Order request</h1>
+            <p class="description">Tell us what you would like. Our team will confirm your order by phone.</p>
+            <p id="account-status" role="status" aria-live="polite">Checking your customer account...</p>
+            <p id="login-required" hidden>
+                Please <a href="login.html">sign in to your customer account</a> before placing an order.
+            </p>
+            <form id="order-form" hidden>
+                <div class="form-group">
+                    <label for="customer">Your name *</label>
+                    <input type="text" id="customer" name="customer" autocomplete="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone number *</label>
+                    <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+                </div>
+                <div class="form-group">
+                    <label for="item">Choose your item *</label>
+                    <select id="item" name="item" required>
+                        <option value="">Select an item</option>
+                        <option value="Espresso">Espresso</option>
+                        <option value="Cappuccino">Cappuccino</option>
+                        <option value="Café Latte">Café Latte</option>
+                        <option value="Iced Coffee">Iced Coffee</option>
+                        <option value="Sandwich">Sandwich</option>
+                        <option value="Eggs & Bread">Eggs &amp; Bread</option>
+                        <option value="Chips">Chips</option>
+                        <option value="Croissant">Croissant</option>
+                        <option value="Tea">Tea</option>
+                        <option value="Lemon Juice">Lemon Juice</option>
+                        <option value="Mango Juice">Mango Juice</option>
+                        <option value="Bottled Water">Bottled Water</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity *</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="100" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">Service type *</label>
+                    <select id="service" name="service" required>
+                        <option value="">Select a service type</option>
+                        <option value="Dine-in">Dine-in</option>
+                        <option value="Takeaway">Takeaway</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Additional instructions</label>
+                    <textarea id="notes" name="notes" placeholder="Any special requests?"></textarea>
+                </div>
+                <button type="submit">Place order</button>
+                <p id="status" role="status" aria-live="polite"></p>
+            </form>
+            <a class="back-link" href="menu.html">← Back to the menu</a>
+        </section>
+    </main>
+
+    <script>
+        const itemSelect = document.getElementById("item");
+        const requestedItem = new URLSearchParams(window.location.search).get("item");
+        const orderForm = document.getElementById("order-form");
+        const orderPhone = document.getElementById("phone");
+        const orderCustomer = document.getElementById("customer");
+        const orderStatus = document.getElementById("status");
+        const accountStatus = document.getElementById("account-status");
+        const loginRequired = document.getElementById("login-required");
+
+        if (requestedItem && Array.from(itemSelect.options).some(option => option.value === requestedItem)) {
+            itemSelect.value = requestedItem;
+        }
+
+        fetch("/api/me")
+            .then(async function (response) {
+                if (!response.ok) return null;
+                return response.json();
+            })
+            .then(function (result) {
+                if (!result || !result.customer) {
+                    accountStatus.hidden = true;
+                    loginRequired.hidden = false;
+                    return;
+                }
+
+                orderCustomer.value = result.customer.name;
+                orderPhone.value = result.customer.phone;
+                orderCustomer.readOnly = true;
+                orderPhone.readOnly = true;
+                accountStatus.hidden = true;
+                orderForm.hidden = false;
+            })
+            .catch(function () {
+                accountStatus.textContent =
+                    "Cannot connect to the account server. Start it with npm start from the website folder.";
+            });
+
+        orderPhone.addEventListener("input", function () {
+            orderPhone.setCustomValidity("");
+            orderStatus.textContent = "";
+        });
+
+        orderForm.addEventListener("input", function () {
+            orderStatus.textContent = "";
+        });
+
+        orderForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const phone = orderPhone.value.trim();
+            const digitCount = phone.replace(/\D/g, "").length;
+            const phoneFormatIsValid = /^\+?[0-9\s().-]+$/.test(phone) &&
+                digitCount >= 7 && digitCount <= 15;
+
+            orderPhone.setCustomValidity(
+                phoneFormatIsValid ? "" : "Enter a phone number with 7 to 15 digits."
+            );
+
+            if (!orderForm.reportValidity()) {
+                return;
+            }
+
+            const submitButton = orderForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            orderStatus.textContent = "Saving your order...";
+            try {
+                const response = await fetch("/api/orders", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        item: itemSelect.value,
+                        quantity: Number(document.getElementById("quantity").value),
+                        service: document.getElementById("service").value,
+                        notes: document.getElementById("notes").value
+                    })
+                });
+                const result = await response.json();
+                if (response.status === 401) {
+                    orderForm.hidden = true;
+                    loginRequired.hidden = false;
+                    accountStatus.hidden = true;
+                    return;
+                }
+                if (!response.ok) throw new Error(result.error || "The order could not be saved.");
+                orderStatus.textContent = result.message + " Reference: " + result.orderId + ".";
+                itemSelect.value = "";
+                document.getElementById("quantity").value = "1";
+                document.getElementById("service").value = "";
+                document.getElementById("notes").value = "";
+            } catch (error) {
+                orderStatus.textContent = error.message.includes("Failed to fetch")
+                    ? "Cannot connect to the order service. Start it by running node server.js in the website folder."
+                    : error.message;
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

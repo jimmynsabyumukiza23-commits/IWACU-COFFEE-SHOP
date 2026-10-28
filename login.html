@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Customer sign-in page for Iwacu Coffee Shop in Nyagatare, Rwanda.">
+    <title>Customer Login | Iwacu Coffee Shop</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            align-items: center;
+            background:
+                linear-gradient(rgba(45, 27, 19, .68), rgba(45, 27, 19, .68)),
+                url("https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1600&q=85") center/cover fixed;
+            color: #352219;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            justify-content: center;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 28px 16px;
+        }
+
+        .logo {
+            color: #e9bb82;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-decoration: none;
+        }
+
+        .login-card {
+            background: #fffdf9;
+            border: 1px solid #eee1d0;
+            border-radius: 14px;
+            box-shadow: 0 16px 50px rgba(0, 0, 0, .24);
+            max-width: 440px;
+            padding: 34px;
+            width: 100%;
+        }
+
+        .eyebrow {
+            color: #9b602f;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            color: #593521;
+            font-size: 32px;
+            line-height: 1.2;
+            margin: 8px 0;
+            text-align: center;
+        }
+
+        .description {
+            color: #78665a;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        input {
+            background: white;
+            border: 1px solid #d6c6b7;
+            border-radius: 6px;
+            font: inherit;
+            padding: 12px;
+            width: 100%;
+        }
+
+        input:focus {
+            border-color: #9b602f;
+            outline: 2px solid #c58b53;
+            outline-offset: 1px;
+        }
+
+        button {
+            background: #593521;
+            border: 0;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+            margin-top: 4px;
+            padding: 13px;
+            width: 100%;
+        }
+
+        button:hover,
+        button:focus-visible {
+            background: #8a5837;
+        }
+
+        .notice {
+            background: #f5eadc;
+            border-radius: 6px;
+            color: #6a4b35;
+            font-size: 13px;
+            margin-top: 18px;
+            padding: 11px 12px;
+        }
+
+        .owner-contact {
+            color: #78665a;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .owner-contact a {
+            color: #593521;
+            font-weight: 700;
+        }
+
+        #login-status {
+            color: #593521;
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        .account-actions {
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        .account-actions button {
+            background: transparent;
+            color: #593521;
+            margin: 0;
+            padding: 6px;
+            text-decoration: underline;
+        }
+
+        .account-actions .sign-out-button {
+            background: #593521;
+            color: white;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .links a {
+            color: #593521;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .links a:hover,
+        .links a:focus-visible {
+            text-decoration: underline;
+        }
+
+        .links .owner-button {
+            background: #593521;
+            border-radius: 6px;
+            color: white;
+            padding: 10px 14px;
+        }
+
+        .links .owner-button:hover,
+        .links .owner-button:focus-visible {
+            background: #8a5837;
+            text-decoration: none;
+        }
+
+        :focus-visible {
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 27px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="logo" href="/">☕ IWACU COFFEE SHOP</a>
+    <main class="login-card">
+        <p class="eyebrow">Welcome back</p>
+        <h1>Customer login</h1>
+        <p class="description">Sign in to your Iwacu account or create one for future visits and orders.</p>
+
+        <form id="login-form">
+            <div class="form-group" id="name-group" hidden>
+                <label for="name">Full name</label>
+                <input type="text" id="name" name="name" autocomplete="name" maxlength="100">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" autocomplete="username" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone number</label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Account password</label>
+                <input type="password" id="password" name="password" autocomplete="current-password"
+                    minlength="10" maxlength="128" required>
+            </div>
+            <button type="submit" id="submit-button">Sign in</button>
+            <p id="login-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="account-actions">
+            <button type="button" id="mode-toggle">New customer? Create an account</button>
+            <button type="button" class="sign-out-button" id="sign-out-button" hidden>Sign out</button>
+        </div>
+
+        <p class="notice">Passwords are stored as secure hashes, not plain text. Use your account to verify yourself on future visits. Orders are saved for the shop to confirm by phone.</p>
+        <p class="owner-contact">Need help? Call the owner: <a href="tel:+250799463436">0799463436</a></p>
+        <div class="links">
+            <a class="owner-button" href="owner.html">Meet the Owner</a>
+            <a href="menu.html">Continue to the menu</a>
+            <a href="/">← Back to home</a>
+        </div>
+    </main>
+
+    <script>
+        const loginForm = document.getElementById("login-form");
+        const phoneInput = document.getElementById("phone");
+        const loginStatus = document.getElementById("login-status");
+        const nameGroup = document.getElementById("name-group");
+        const nameInput = document.getElementById("name");
+        const passwordInput = document.getElementById("password");
+        const submitButton = document.getElementById("submit-button");
+        const modeToggle = document.getElementById("mode-toggle");
+        const signOutButton = document.getElementById("sign-out-button");
+        let isRegisterMode = false;
+
+        function setRegistrationMode(enabled) {
+            isRegisterMode = enabled;
+            nameGroup.hidden = !enabled;
+            nameInput.required = enabled;
+            passwordInput.autocomplete = enabled ? "new-password" : "current-password";
+            submitButton.textContent = enabled ? "Create account" : "Sign in";
+            modeToggle.textContent = enabled
+                ? "Already have an account? Sign in"
+                : "New customer? Create an account";
+            loginStatus.textContent = enabled
+                ? "Choose a password with at least 10 characters."
+                : "";
+        }
+
+        async function sendApiRequest(path, payload) {
+            const response = await fetch(path, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || "The request could not be completed.");
+            return result;
+        }
+
+        fetch("/api/me")
+            .then(async function (response) {
+                if (!response.ok) return null;
+                return response.json();
+            })
+            .then(function (result) {
+                if (result && result.customer) {
+                    loginStatus.textContent = "Signed in as " + result.customer.name + ".";
+                    signOutButton.hidden = false;
+                }
+            })
+            .catch(function () {
+                loginStatus.textContent = "The account service is unavailable. Start the website server to use customer accounts.";
+            });
+
+        modeToggle.addEventListener("click", function () {
+            setRegistrationMode(!isRegisterMode);
+        });
+
+        phoneInput.addEventListener("input", function () {
+            phoneInput.setCustomValidity("");
+            loginStatus.textContent = "";
+        });
+
+        loginForm.addEventListener("input", function () {
+            loginStatus.textContent = "";
+        });
+
+        loginForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const phone = phoneInput.value.trim();
+            const digitCount = phone.replace(/\D/g, "").length;
+            const phoneFormatIsValid = /^\+?[0-9\s().-]+$/.test(phone) &&
+                digitCount >= 7 && digitCount <= 15;
+
+            phoneInput.setCustomValidity(
+                phoneFormatIsValid ? "" : "Enter a phone number with 7 to 15 digits."
+            );
+
+            if (!loginForm.reportValidity()) {
+                return;
+            }
+
+            submitButton.disabled = true;
+            loginStatus.textContent = isRegisterMode ? "Creating your account..." : "Signing in...";
+            try {
+                const result = await sendApiRequest(
+                    isRegisterMode ? "/api/register" : "/api/login",
+                    {
+                        name: nameInput.value.trim(),
+                        email: document.getElementById("email").value.trim(),
+                        phone: phone,
+                        password: passwordInput.value
+                    }
+                );
+                signOutButton.hidden = false;
+                loginForm.reset();
+                setRegistrationMode(false);
+                loginStatus.textContent = result.message;
+            } catch (error) {
+                loginStatus.textContent = error.message.includes("Failed to fetch")
+                    ? "Cannot connect to the account server. Open PowerShell in the website folder and run node server.js."
+                    : error.message;
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        signOutButton.addEventListener("click", async function () {
+            signOutButton.disabled = true;
+            try {
+                await sendApiRequest("/api/logout", {});
+                signOutButton.hidden = true;
+                loginStatus.textContent = "You are signed out.";
+            } catch (error) {
+                loginStatus.textContent = error.message;
+            } finally {
+                signOutButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

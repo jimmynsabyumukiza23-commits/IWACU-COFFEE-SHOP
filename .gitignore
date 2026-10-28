@@ -1,0 +1,9 @@
+node_modules/
+data/
+.env
+.env.*
+!.env.example
+/Iwacu Coffee Shop _ Nyagatare, Rwanda.html
+/Iwacu Coffee Shop _ Nyagatare, Rwanda_files/
+/jimmy.html
+/node-v24.22.1-x64.msi

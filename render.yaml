@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: iwacu-coffee-shop
+    runtime: node
+    plan: starter
+    region: frankfurt
+    rootDir: .
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    disk:
+      name: iwacu-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: IWACU_DATA_DIR
+        value: /var/data
+      - key: NODE_VERSION
+        value: 24.22.1

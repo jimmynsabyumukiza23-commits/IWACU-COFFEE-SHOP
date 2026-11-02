@@ -7,16 +7,20 @@
     <meta name="description"
         content="Discover fresh coffee, food, and warm Rwandan hospitality at Iwacu Coffee Shop in Nyagatare.">
     <title>Iwacu Coffee Shop | Nyagatare, Rwanda</title>
-    <link rel="canonical" href="/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="canonical" href="https://www.iwacucoffeeshop.com/">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.iwacucoffeeshop.com/">
     <meta property="og:title" content="Iwacu Coffee Shop | Nyagatare, Rwanda">
     <meta property="og:description"
         content="Discover fresh coffee, food, and warm Rwandan hospitality at Iwacu Coffee Shop in Nyagatare.">
     <style>
         :root {
-            color-scheme: light;
-            --coffee: #2d1b13;
-            --brown: #593521;
+            93521;
             --caramel: #c58b53;
             --cream: #faf6ef;
             --muted: #78665a;
@@ -35,8 +39,14 @@
         body {
             background: var(--cream);
             color: #352219;
-            font-family: Arial, sans-serif;
+            font-family: "DM Sans", sans-serif;
             line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Playfair Display", Georgia, serif;
         }
 
         .site-header {
@@ -50,11 +60,19 @@
         }
 
         .logo {
+            align-items: center;
             color: #e9bb82;
+            display: inline-flex;
             font-size: 20px;
             font-weight: 700;
+            gap: 8px;
             text-decoration: none;
             white-space: nowrap;
+        }
+
+        .logo-cup {
+            height: 32px;
+            width: 36px;
         }
 
         .site-nav {
@@ -77,29 +95,68 @@
         }
 
         .site-nav .login-button {
-            background: #c58b53;
+            background: #16834a;
             border-radius: 6px;
-            color: #25170f;
+            color: white;
             padding: 9px 15px;
         }
 
         .site-nav .login-button:hover,
         .site-nav .login-button:focus-visible {
+            background: #116b3b;
+            color: white;
+        }
+
+        .site-nav .menu-button {
+            background: #d97706;
+            border-radius: 6px;
+            color: white;
+            padding: 9px 15px;
+        }
+
+        .site-nav .menu-button:hover,
+        .site-nav .menu-button:focus-visible {
+            background: #b45309;
+            color: white;
+        }
+
+        .site-nav .story-button {
+            background: #6b7280;
+            border-radius: 6px;
+            color: white;
+            padding: 9px 15px;
+        }
+
+        .site-nav .story-button:hover,
+        .site-nav .story-button:focus-visible {
+            background: #4b5563;
+            color: white;
+        }
+
+        .site-nav .delivery-button {
             background: #e9bb82;
+            border-radius: 6px;
+            color: #25170f;
+            padding: 9px 15px;
+        }
+
+        .site-nav .delivery-button:hover,
+        .site-nav .delivery-button:focus-visible {
+            background: #c58b53;
             color: #25170f;
         }
 
         .site-nav .owner-button {
-            border: 1px solid #e9bb82;
+            background: #3d6652;
             border-radius: 6px;
-            color: #e9bb82;
-            padding: 8px 14px;
+            color: white;
+            padding: 9px 15px;
         }
 
         .site-nav .owner-button:hover,
         .site-nav .owner-button:focus-visible {
-            background: #e9bb82;
-            color: #25170f;
+            background: #2d4d3e;
+            color: white;
         }
 
         .hero {
@@ -126,7 +183,7 @@
         }
 
         .hero h1 {
-            font-size: clamp(42px, 6vw, 68px);
+            font-size: 64px;
             line-height: 1.1;
             margin: 14px 0;
         }
@@ -147,6 +204,10 @@
             padding: 12px 21px;
             text-decoration: none;
             transition: background-color .2s ease, color .2s ease, transform .2s ease;
+        }
+
+        .hero-content>.button {
+            margin: 0 8px 10px 0;
         }
 
         .button:hover,
@@ -180,6 +241,99 @@
             border-color: #116b3b;
         }
 
+        .hero .button[data-contact-dialog-open] {
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .contact-dialog {
+            border: 0;
+            border-radius: 20px;
+            box-shadow: 0 24px 70px rgba(35, 20, 12, .3);
+            color: #352219;
+            margin: auto;
+            max-width: 480px;
+            padding: 0;
+            width: calc(100% - 32px);
+        }
+
+        .contact-dialog::backdrop {
+            background: rgba(35, 20, 12, .62);
+            backdrop-filter: blur(3px);
+        }
+
+        .contact-dialog-content {
+            padding: 32px;
+            position: relative;
+        }
+
+        .contact-dialog-content .eyebrow {
+            color: #9b602f;
+        }
+
+        .contact-dialog h2 {
+            color: #593521;
+            font-size: 26px;
+            line-height: 1.2;
+            margin: 8px 36px 8px 0;
+        }
+
+        .contact-dialog-description {
+            color: #78665a;
+            margin-bottom: 20px;
+        }
+
+        .contact-dialog-close {
+            align-items: center;
+            background: #f3e8da;
+            border: 0;
+            border-radius: 50%;
+            color: #593521;
+            cursor: pointer;
+            display: flex;
+            font-size: 24px;
+            height: 38px;
+            justify-content: center;
+            line-height: 1;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 38px;
+        }
+
+        .contact-dialog-close:hover,
+        .contact-dialog-close:focus-visible {
+            background: #e9d4bb;
+        }
+
+        .contact-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .contact-options a {
+            background: #faf6ef;
+            border: 1px solid #e3d2bd;
+            border-radius: 10px;
+            color: #593521;
+            font-weight: 700;
+            padding: 13px 15px;
+            text-decoration: none;
+        }
+
+        .contact-options a:hover,
+        .contact-options a:focus-visible {
+            background: #f3e8da;
+        }
+
+        .contact-options a small {
+            color: #78665a;
+            display: block;
+            font-size: 13px;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
         section {
             padding: 72px 8%;
         }
@@ -208,54 +362,148 @@
         }
 
         .coffee-moment {
-            background: #f3e8da;
+            background:
+                radial-gradient(ellipse at 50% 0, rgba(255, 255, 255, .9), transparent 58%),
+                linear-gradient(135deg, #f8efe3, #efe0ce);
+        }
+
+        .coffee-break-illustration {
+            aspect-ratio: 1400 / 650;
+            border: 1px solid rgba(89, 53, 33, .12);
+            border-radius: 24px;
+            box-shadow: 0 18px 42px rgba(89, 53, 33, .14);
+            display: block;
+            margin: 0 auto 30px;
+            max-width: 860px;
+            overflow: hidden;
+            object-fit: cover;
+            width: 100%;
         }
 
         .coffee-table {
             display: grid;
-            gap: 18px;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 22px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             margin: 0 auto;
             max-width: 860px;
         }
 
         .coffee-guest {
-            background: #fffdf9;
-            border: 1px solid #e3d2bd;
-            border-radius: 12px;
-            padding: 22px;
+            background: rgba(255, 253, 249, .94);
+            border: 1px solid rgba(154, 94, 54, .16);
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(89, 53, 33, .09);
+            padding: 28px 20px 24px;
+            position: relative;
             text-align: center;
+            transition: box-shadow .2s ease, transform .2s ease;
         }
 
-        .coffee-guest-icon {
-            display: block;
-            font-size: 38px;
-            margin-bottom: 8px;
+        .coffee-guest::before {
+            background: linear-gradient(90deg, #c58b53, #e9bb82);
+            border-radius: 20px 20px 0 0;
+            content: "";
+            height: 5px;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .coffee-guest:hover {
+            box-shadow: 0 18px 36px rgba(89, 53, 33, .14);
+            transform: translateY(-4px);
         }
 
         .coffee-guest h3 {
             color: #593521;
+            font-size: 19px;
         }
 
         .coffee-cup-state {
+            align-items: center;
             color: #78665a;
-            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .coffee-cup-image {
+            height: 82px;
+            width: 92px;
+        }
+
+        .coffee-cup-link {
+            align-items: center;
+            background: #f7ecdf;
+            border: 1px solid #efe0ce;
+            border-radius: 50%;
+            display: inline-flex;
+            height: 112px;
+            justify-content: center;
+            transition: background-color .2s ease, transform .2s ease;
+            width: 112px;
+        }
+
+        .coffee-cup-link:hover {
+            background: #f1dfca;
+            transform: scale(1.04);
+        }
+
+        .coffee-cup-link:focus-visible {
+            outline: 3px solid #8a5837;
+            outline-offset: 3px;
+        }
+
+        .coffee-cup-state span {
+            color: #8a5837;
+            font-size: 14px;
+            font-weight: 700;
         }
 
         .coffee-break-action {
-            margin-top: 26px;
+            margin-top: 34px;
             text-align: center;
         }
 
         .coffee-break-action .button {
             cursor: pointer;
             font: inherit;
+            min-width: 220px;
         }
 
         .coffee-break-status {
             color: #593521;
-            margin-top: 10px;
-            min-height: 24px;
+            margin-top: 13px;
+            min-height: 26px;
+        }
+
+        @media (max-width: 620px) {
+            .coffee-table {
+                grid-template-columns: 1fr;
+                max-width: 340px;
+            }
+
+            .coffee-guest {
+                padding: 22px 18px;
+            }
+
+            .coffee-cup-state {
+                flex-direction: row;
+                margin-top: 10px;
+            }
+
+            .coffee-cup-link {
+                height: 84px;
+                width: 84px;
+            }
+
+            .coffee-cup-image {
+                height: 66px;
+                width: 74px;
+            }
         }
 
         .menu-grid {
@@ -267,12 +515,56 @@
         .menu-card {
             background: #faf6ef;
             border: 1px solid #eee1d0;
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 25px;
+            transition: box-shadow .2s ease, transform .2s ease;
+        }
+
+        .menu-card:hover {
+            box-shadow: 0 14px 30px rgba(89, 53, 33, .12);
+            transform: translateY(-4px);
         }
 
         .menu-card .emoji {
             font-size: 34px;
+        }
+
+        .menu-card-product {
+            color: inherit;
+            display: block;
+            text-decoration: none;
+        }
+
+        .menu-card-product:focus-visible {
+            border-radius: 6px;
+            outline: 3px solid #c58b53;
+            outline-offset: 4px;
+        }
+
+        .menu-card-product:hover h3 {
+            color: #8a5837;
+        }
+
+        .menu-card-product img {
+            width: 100%;
+        }
+
+        .menu-card>.button {
+            margin-top: 16px;
+        }
+
+        .menu-card .coffee-cup-image {
+            height: 38px;
+            width: 42px;
+        }
+
+        .menu-preview-image {
+            aspect-ratio: 16 / 10;
+            border-radius: 6px;
+            display: block;
+            margin-bottom: 12px;
+            object-fit: cover;
+            width: 100%;
         }
 
         .menu-card h3 {
@@ -287,6 +579,78 @@
 
         .menu-link {
             margin-top: 30px;
+            text-align: center;
+        }
+
+        .delivery-order {
+            background: #f3e8da;
+        }
+
+        .delivery-form {
+            background: white;
+            border: 1px solid #e3d2bd;
+            border-radius: 12px;
+            display: grid;
+            gap: 12px;
+            margin: 0 auto;
+            max-width: 460px;
+            padding: 25px;
+        }
+
+        .delivery-form[hidden] {
+            display: none;
+        }
+
+        .delivery-form h3 {
+            color: #593521;
+            margin-bottom: 4px;
+        }
+
+        .delivery-form label {
+            color: #593521;
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .delivery-form input,
+        .delivery-form select {
+            background: white;
+            border: 1px solid #cbb9a5;
+            border-radius: 6px;
+            color: #352219;
+            font: inherit;
+            padding: 10px 12px;
+            width: 100%;
+        }
+
+        .delivery-form input:focus,
+        .delivery-form select:focus {
+            border-color: #9b602f;
+            outline: 2px solid #c58b53;
+            outline-offset: 1px;
+        }
+
+        .delivery-form button {
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .delivery-form button:disabled {
+            cursor: wait;
+            opacity: .7;
+        }
+
+        .delivery-account-status,
+        .delivery-result {
+            color: #593521;
+            min-height: 24px;
+            text-align: center;
+        }
+
+        .delivery-login-required {
+            margin: 0 auto 18px;
             text-align: center;
         }
 
@@ -368,6 +732,7 @@
         }
 
         .comment-form label {
+
             color: #593521;
             display: block;
             font-size: 14px;
@@ -451,12 +816,14 @@
         }
 
         .contact-map {
-            border: 0;
+            background: #eee8dd;
+            border: 1px solid #e3d2bd;
             border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(89, 53, 33, .12);
             display: block;
-            height: 360px;
+            height: 420px;
             margin: 28px auto 0;
-            max-width: 760px;
+            max-width: 900px;
             width: 100%;
         }
 
@@ -468,6 +835,10 @@
         }
 
         footer span {
+            color: #e9bb82;
+        }
+
+        footer a {
             color: #e9bb82;
         }
 
@@ -490,6 +861,10 @@
             .hero {
                 min-height: 460px;
                 padding: 62px 7%;
+            }
+
+            .hero h1 {
+                font-size: 46px;
             }
 
             section {
@@ -516,13 +891,16 @@
 
 <body>
     <header class="site-header">
-        <a class="logo" href="/" aria-label="Iwacu Coffee Shop home">☕ IWACU COFFEE SHOP</a>
+        <a class="logo" href="UR.JI.html" aria-label="Iwacu Coffee Shop home">
+            <img class="logo-cup" src="coffee-cup-full.svg" alt=""> IWACU COFFEE SHOP
+        </a>
         <nav class="site-nav" aria-label="Main navigation">
-            <a href="/" aria-current="page">Home</a>
-            <a href="menu.html">Our Menu</a>
-            <a href="#about">Our Story</a>
+            <a href="UR.JI.html" aria-current="page">Home</a>
+            <a class="menu-button" href="menu.html">Our Menu</a>
+            <a class="delivery-button" href="#delivery-order">Delivery Order</a>
+            <a class="story-button" href="#about">Our Story</a>
             <a class="login-button" href="login.html">Customer Login</a>
-            <a class="owner-button" href="owner.html">Meet the Owner</a>
+            <a class="owner-button" href="owner.html">Owner Login</a>
         </nav>
     </header>
 
@@ -532,8 +910,9 @@
                 <p class="eyebrow">Welcome to Iwacu</p>
                 <h1>Every cup tells a story.</h1>
                 <p>Discover great coffee, delicious bites, and a warm welcome in Nyagatare, Rwanda.</p>
+                <a class="button button-dark" href="#delivery-order">Place a delivery order</a>
                 <a class="button" href="menu.html">Explore our menu</a>
-                <a class="button" href="tel:+250799463436">Call us</a>
+                <button class="button" type="button" data-contact-dialog-open>Call us</button>
                 <a class="button button-whatsapp" href="https://wa.me/250799463436?text=Hello%20Iwacu%20Coffee%20Shop"
                     target="_blank" rel="noopener noreferrer">WhatsApp</a>
             </div>
@@ -545,21 +924,35 @@
                 <h2 id="coffee-moment-heading">A little coffee break together</h2>
                 <p>Alice, Bob, and Charlie are sharing a cup at the table. Enjoy the moment.</p>
             </div>
+            <img class="coffee-break-illustration" src="coffee-break-friends.jpg"
+                alt="Friends laughing together and sharing coffee around a table.">
             <div class="coffee-table" id="coffee-table">
                 <article class="coffee-guest" data-person="Alice">
-                    <span class="coffee-guest-icon" aria-hidden="true">👩🏽‍🦱</span>
                     <h3>Alice</h3>
-                    <p class="coffee-cup-state">☕ Full cup</p>
+                    <p class="coffee-cup-state">
+                        <a class="coffee-cup-link" href="menu.html#coffee-heading" aria-label="Browse coffee options">
+                            <img class="coffee-cup-image" src="coffee-cup-full.svg" alt="">
+                        </a>
+                        <span>Full cup</span>
+                    </p>
                 </article>
                 <article class="coffee-guest" data-person="Bob">
-                    <span class="coffee-guest-icon" aria-hidden="true">👨🏽‍🦱</span>
                     <h3>Bob</h3>
-                    <p class="coffee-cup-state">☕ Full cup</p>
+                    <p class="coffee-cup-state">
+                        <a class="coffee-cup-link" href="menu.html#coffee-heading" aria-label="Browse coffee options">
+                            <img class="coffee-cup-image" src="coffee-cup-full.svg" alt="">
+                        </a>
+                        <span>Full cup</span>
+                    </p>
                 </article>
                 <article class="coffee-guest" data-person="Charlie">
-                    <span class="coffee-guest-icon" aria-hidden="true">🧑🏽</span>
                     <h3>Charlie</h3>
-                    <p class="coffee-cup-state">☕ Full cup</p>
+                    <p class="coffee-cup-state">
+                        <a class="coffee-cup-link" href="menu.html#coffee-heading" aria-label="Browse coffee options">
+                            <img class="coffee-cup-image" src="coffee-cup-full.svg" alt="">
+                        </a>
+                        <span>Full cup</span>
+                    </p>
                 </article>
             </div>
             <div class="coffee-break-action">
@@ -580,29 +973,129 @@
             </div>
             <div class="menu-grid">
                 <article class="menu-card">
-                    <div class="emoji" aria-hidden="true">☕</div>
-                    <h3>Espresso</h3>
-                    <p>Bold, rich coffee for a perfect start to your day.</p>
+                    <a class="menu-card-product" href="order.html?item=Espresso" aria-label="Order Espresso">
+                        <img class="menu-preview-image" src="espresso-cups.jpg" alt="Freshly made coffee served in cups"
+                            loading="lazy" decoding="async">
+                        <h3>Espresso</h3>
+                        <p>Bold, rich coffee for a perfect start to your day.</p>
+                    </a>
+                    <a class="button" href="order.html?item=Espresso">Order this item</a>
                 </article>
                 <article class="menu-card">
-                    <div class="emoji" aria-hidden="true">🥛</div>
-                    <h3>Cappuccino</h3>
-                    <p>Smooth espresso topped with creamy milk foam.</p>
+                    <a class="menu-card-product" href="order.html?item=Cappuccino" aria-label="Order Cappuccino">
+                        <img class="menu-preview-image" src="cappuccino-product.jpg"
+                            alt="Cappuccino with delicate foam art" loading="lazy" decoding="async">
+                        <h3>Cappuccino</h3>
+                        <p>Smooth espresso topped with creamy milk foam.</p>
+                    </a>
+                    <a class="button" href="order.html?item=Cappuccino">Order this item</a>
                 </article>
                 <article class="menu-card">
-                    <div class="emoji" aria-hidden="true">🥐</div>
-                    <h3>Fresh pastries</h3>
-                    <p>A buttery treat to enjoy with your favorite drink.</p>
+                    <a class="menu-card-product" href="order.html?item=Croissant" aria-label="Order Croissant">
+                        <img class="menu-preview-image" src="croissant-product.jpg"
+                            alt="Freshly baked golden croissants" loading="lazy" decoding="async">
+                        <h3>Fresh pastries</h3>
+                        <p>A buttery treat to enjoy with your favorite drink.</p>
+                    </a>
+                    <a class="button" href="order.html?item=Croissant">Order this item</a>
                 </article>
                 <article class="menu-card">
-                    <div class="emoji" aria-hidden="true">🥭</div>
-                    <h3>Fresh juice</h3>
-                    <p>Bright, fruity refreshment made for sunny days.</p>
+                    <a class="menu-card-product" href="order.html?item=Mango%20Juice" aria-label="Order Mango Juice">
+                        <img class="menu-preview-image" src="fresh-juice-product.jpg"
+                            alt="Colorful fresh fruit juices ready to serve" loading="lazy" decoding="async">
+                        <h3>Fresh juice</h3>
+                        <p>Bright, fruity refreshment made for sunny days.</p>
+                    </a>
+                    <a class="button" href="order.html?item=Mango%20Juice">Order this item</a>
                 </article>
             </div>
             <div class="menu-link">
                 <a class="button button-dark" href="menu.html">View the full menu</a>
             </div>
+        </section>
+
+        <section class="delivery-order" id="delivery-order" aria-labelledby="delivery-order-heading">
+            <div class="section-heading">
+                <p class="eyebrow">Plan ahead</p>
+                <h2 id="delivery-order-heading">Product delivery order</h2>
+                <p>Choose a product and a convenient delivery date and time.</p>
+            </div>
+            <p class="delivery-account-status" id="delivery-account-status" role="status" aria-live="polite">
+                Checking your customer account...
+            </p>
+            <p class="delivery-login-required" id="delivery-login-required" hidden>
+                Please <a href="login.html">sign in to your customer account</a> before placing a delivery order.
+            </p>
+            <form class="delivery-form" id="delivery-order-form" hidden>
+                <h3>Delivery details</h3>
+
+                <div>
+                    <label for="delivery-customer">Customer name</label>
+                    <input type="text" id="delivery-customer" name="customer" autocomplete="name" readonly required>
+                </div>
+
+                <div>
+                    <label for="delivery-phone">Phone number</label>
+                    <input type="tel" id="delivery-phone" name="phone" autocomplete="tel" required>
+                </div>
+
+                <div>
+                    <label for="delivery-product">Product</label>
+                    <select id="delivery-product" name="product" required>
+                        <option value="">Choose a product</option>
+                        <option value="Espresso">Espresso</option>
+                        <option value="Cappuccino">Cappuccino</option>
+                        <option value="Café Latte">Café Latte</option>
+                        <option value="Iced Coffee">Iced Coffee</option>
+                        <option value="Sandwich">Sandwich</option>
+                        <option value="Eggs & Bread">Eggs &amp; Bread</option>
+                        <option value="Chips">Chips</option>
+                        <option value="Croissant">Croissant</option>
+                        <option value="Tea">Tea</option>
+                        <option value="Lemon Juice">Lemon Juice</option>
+                        <option value="Mango Juice">Mango Juice</option>
+                        <option value="Bottled Water">Bottled Water</option>
+                        <option value="Apple">Apple</option>
+                        <option value="Fanta">Fanta</option>
+                        <option value="Rice">Rice</option>
+                        <option value="Chicken">Grilled Chicken</option>
+                        <option value="Meat">Meat</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="delivery-quantity">Quantity</label>
+                    <input type="number" id="delivery-quantity" name="quantity" min="1" max="100" value="1" required>
+                </div>
+
+                <div>
+                    <label for="delivery-address">Delivery address</label>
+                    <input type="text" id="delivery-address" name="address" autocomplete="street-address" minlength="5"
+                        maxlength="300" required>
+                </div>
+
+                <div>
+                    <label for="delivery-date">Delivery date</label>
+                    <input type="date" id="delivery-date" name="date" required>
+                </div>
+
+                <div>
+                    <label for="delivery-time">Delivery time (GMT)</label>
+                    <input type="time" id="delivery-time" name="time" required>
+                </div>
+
+                <fieldset>
+                    <legend>Payment</legend>
+                    <label><input type="radio" name="delivery-payment-method" value="pay_later" checked>
+                        Pay when the shop confirms the order</label>
+                    <label><input type="radio" name="delivery-payment-method" value="mobile_money">
+                        Pay now with Rwanda Mobile Money (MTN MoMo / Airtel Money)</label>
+                </fieldset>
+                <p id="delivery-config-status" role="status" aria-live="polite"></p>
+                <button class="button button-dark" type="submit">Submit order</button>
+                <p class="delivery-result" id="delivery-result" role="status" aria-live="polite"></p>
+            </form>
+            <div id="delivery-captcha"></div>
         </section>
 
         <section class="about" id="about">
@@ -647,6 +1140,7 @@
                         <label for="comment-message">Comment</label>
                         <textarea id="comment-message" name="message" maxlength="500" required></textarea>
                     </div>
+                    <div id="comment-captcha"></div>
                     <p class="comment-status" id="comment-status" role="status" aria-live="polite"></p>
                     <button class="button button-dark" id="comment-submit" type="submit">Post comment</button>
                 </form>
@@ -660,29 +1154,271 @@
                 <h2>Visit Iwacu Coffee Shop</h2>
                 <p>We look forward to welcoming you.</p>
             </div>
-            <p class="contact-details"><strong>Location:</strong> Nyagatare town centre, near the car park (approximate
-                area)</p>
+            <p class="contact-details"><strong>Location:</strong> Nyagatare town centre, near Nyagatare Car Park
+                (approximate area)</p>
+            <p class="contact-details"><strong>Nearby landmark:</strong> Nyagatare Car Park</p>
             <p class="contact-details"><strong>Phone:</strong> <a href="tel:+250799463436">0799463436</a></p>
             <p class="contact-details"><strong>Email:</strong> <a
                     href="mailto:jimmynsabyumukiza23@gmail.com">jimmynsabyumukiza23@gmail.com</a></p>
             <p class="contact-details"><strong>Opening hours:</strong> Open 24 hours</p>
             <a class="button button-dark"
-                href="https://www.google.com/maps/search/?api=1&amp;query=Nyagatare+town+centre+car+park%2C+Rwanda"
+                href="https://www.google.com/maps/search/?api=1&amp;query=Nyagatare+Car+Park%2C+Nyagatare%2C+Rwanda"
                 target="_blank" rel="noopener noreferrer">Find us on Google Maps</a>
             <iframe class="contact-map"
-                src="https://maps.google.com/maps?q=Nyagatare%20town%20centre%20car%20park%2C%20Rwanda&amp;output=embed"
-                title="Map of Nyagatare town centre near the car park" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                src="https://maps.google.com/maps?q=Nyagatare%20Car%20Park%2C%20Nyagatare%2C%20Rwanda&amp;output=embed"
+                title="Map showing Nyagatare Car Park, a nearby landmark in Nyagatare" loading="lazy"
+                referrerpolicy="no-referrer" allowfullscreen></iframe>
         </section>
 
     </main>
 
+    <dialog class="contact-dialog" id="contact-dialog" aria-labelledby="contact-dialog-heading">
+        <div class="contact-dialog-content">
+            <button class="contact-dialog-close" type="button" data-contact-dialog-close
+                aria-label="Close contact options">&times;</button>
+            <p class="eyebrow">We are happy to help</p>
+            <h2 id="contact-dialog-heading">Choose how to contact us</h2>
+            <p class="contact-dialog-description">Pick the option that works best for you.</p>
+            <div class="contact-options">
+                <a href="tel:+250799463436">Call us<small>0799 463 436</small></a>
+                <a href="mailto:jimmynsabyumukiza23@gmail.com">Email us<small>jimmynsabyumukiza23@gmail.com</small></a>
+                <a href="https://wa.me/250799463436?text=Hello%20Iwacu%20Coffee%20Shop" target="_blank"
+                    rel="noopener noreferrer">WhatsApp<small>Chat with Iwacu Coffee Shop</small></a>
+            </div>
+        </div>
+    </dialog>
+
     <footer>
         <p>© <span id="year"></span> <span>Iwacu Coffee Shop</span>. Made with love in Rwanda.</p>
         <p>Made by NSA.JIMMY</p>
+        <p><a href="privacy.html">Privacy notice</a></p>
     </footer>
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
+
+        const contactDialog = document.getElementById("contact-dialog");
+        document.querySelectorAll("[data-contact-dialog-open]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                contactDialog.showModal();
+            });
+        });
+        document.querySelector("[data-contact-dialog-close]").addEventListener("click", function () {
+            contactDialog.close();
+        });
+        contactDialog.addEventListener("click", function (event) {
+            if (event.target === contactDialog) contactDialog.close();
+        });
+
+        const deliveryDateInput = document.getElementById("delivery-date");
+        deliveryDateInput.min = new Date().toISOString().slice(0, 10);
+
+        const deliveryOrderForm = document.getElementById("delivery-order-form");
+        const deliveryAccountStatus = document.getElementById("delivery-account-status");
+        const deliveryLoginRequired = document.getElementById("delivery-login-required");
+        const deliveryLoginLink = deliveryLoginRequired.querySelector("a");
+        const deliveryResult = document.getElementById("delivery-result");
+        const deliveryCustomerInput = document.getElementById("delivery-customer");
+        const deliveryPhoneInput = document.getElementById("delivery-phone");
+        const deliveryProductSelect = document.getElementById("delivery-product");
+        const deliverySubmitButton = deliveryOrderForm.querySelector('button[type="submit"]');
+        const commentCaptchaContainer = document.getElementById("comment-captcha");
+        const deliveryCaptchaContainer = document.getElementById("delivery-captcha");
+        let commentCaptchaToken = "";
+        let deliveryCaptchaToken = "";
+        let commentCaptchaId = null;
+        let deliveryCaptchaId = null;
+        let mobileMoneyConfigured = false;
+
+        window.onHomeCaptchaLoaded = function () {
+            const siteKey = window.homeCaptchaSiteKey;
+            if (!siteKey) return;
+            commentCaptchaId = grecaptcha.render(commentCaptchaContainer, {
+                sitekey: siteKey,
+                callback: function (token) { commentCaptchaToken = token; },
+                "expired-callback": function () { commentCaptchaToken = ""; },
+                "error-callback": function () { commentCaptchaToken = ""; }
+            });
+            deliveryCaptchaId = grecaptcha.render(deliveryCaptchaContainer, {
+                sitekey: siteKey,
+                callback: function (token) { deliveryCaptchaToken = token; },
+                "expired-callback": function () { deliveryCaptchaToken = ""; },
+                "error-callback": function () { deliveryCaptchaToken = ""; }
+            });
+        };
+
+        fetch("/api/config", { cache: "no-store" })
+            .then(function (response) {
+                if (!response.ok) throw new Error("Could not load security settings.");
+                return response.json();
+            })
+            .then(function (config) {
+                mobileMoneyConfigured = config.mobileMoneyConfigured;
+                if (!config.captchaSiteKey) {
+                    storyCommentStatus.textContent = "Comment security verification is not configured. Please contact the shop.";
+                    document.getElementById("delivery-config-status").textContent =
+                        "Order security verification is not configured. Please contact the shop.";
+                    return;
+                }
+                window.homeCaptchaSiteKey = config.captchaSiteKey;
+                const script = document.createElement("script");
+                script.src = "https://www.google.com/recaptcha/api.js?onload=onHomeCaptchaLoaded&render=explicit";
+                script.async = true;
+                script.defer = true;
+                script.onerror = function () {
+                    storyCommentStatus.textContent = "CAPTCHA could not be loaded. Please refresh the page.";
+                    document.getElementById("delivery-config-status").textContent =
+                        "CAPTCHA could not be loaded. Please refresh the page.";
+                };
+                document.head.append(script);
+            })
+            .catch(function () {
+                storyCommentStatus.textContent = "Comment security settings could not be loaded.";
+                document.getElementById("delivery-config-status").textContent =
+                    "Order security settings could not be loaded.";
+            });
+        const requestedDeliveryItem = new URLSearchParams(window.location.search).get("deliveryItem");
+        deliveryLoginLink.href = "login.html?next=" + encodeURIComponent(
+            window.location.pathname + window.location.search + "#delivery-order"
+        );
+        if (requestedDeliveryItem &&
+            Array.from(deliveryProductSelect.options).some(option => option.value === requestedDeliveryItem)) {
+            deliveryProductSelect.value = requestedDeliveryItem;
+        }
+
+        fetch("/api/me")
+            .then(async function (response) {
+                if (!response.ok) throw new Error("Your customer account could not be checked.");
+                return response.json();
+            })
+            .then(function (result) {
+                if (!result.customer) {
+                    deliveryAccountStatus.hidden = true;
+                    deliveryLoginRequired.hidden = false;
+                    return;
+                }
+
+                deliveryCustomerInput.value = result.customer.name;
+                deliveryPhoneInput.value = result.customer.phone;
+                deliveryAccountStatus.hidden = true;
+                deliveryOrderForm.hidden = false;
+            })
+            .catch(function () {
+                deliveryAccountStatus.textContent =
+                    "Cannot connect to the account service. Open the website through its server and try again.";
+            });
+
+        deliveryOrderForm.addEventListener("input", function () {
+            deliveryResult.textContent = "";
+        });
+
+        deliveryOrderForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            if (!deliveryOrderForm.reportValidity()) return;
+
+            if (!deliveryCaptchaToken) {
+                deliveryResult.textContent = "Complete the CAPTCHA check before placing your order.";
+                return;
+            }
+            const paymentMethod = deliveryOrderForm.querySelector(
+                'input[name="delivery-payment-method"]:checked'
+            ).value;
+            if (paymentMethod === "mobile_money" && !mobileMoneyConfigured) {
+                deliveryResult.textContent =
+                    "Online Mobile Money payments are not configured. Choose pay when the shop confirms your order.";
+                return;
+            }
+            const paymentWindow = paymentMethod === "mobile_money"
+                ? window.open("about:blank", "_blank")
+                : null;
+            deliverySubmitButton.disabled = true;
+            deliveryResult.textContent = "Saving your delivery order...";
+            try {
+                const response = await fetch("/api/orders", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        item: deliveryProductSelect.value,
+                        quantity: Number(document.getElementById("delivery-quantity").value),
+                        service: "Delivery",
+                        phone: deliveryPhoneInput.value.trim(),
+                        paymentMethod,
+                        captchaToken: deliveryCaptchaToken,
+                        deliveryAddress: document.getElementById("delivery-address").value.trim(),
+                        deliveryDate: deliveryDateInput.value,
+                        deliveryTime: document.getElementById("delivery-time").value
+                    })
+                });
+                const result = await response.json();
+                deliveryCaptchaToken = "";
+                if (deliveryCaptchaId !== null) grecaptcha.reset(deliveryCaptchaId);
+                if (response.status === 401) {
+                    if (paymentWindow) paymentWindow.close();
+                    deliveryOrderForm.hidden = true;
+                    deliveryLoginRequired.hidden = false;
+                    return;
+                }
+                if (!response.ok) throw new Error(result.error || "The delivery order could not be saved.");
+
+                deliveryResult.textContent = result.message + " Reference: " + result.orderId + ".";
+                if (result.paymentUrl) {
+                    if (paymentWindow) {
+                        paymentWindow.opener = null;
+                        paymentWindow.location = result.paymentUrl;
+                    } else {
+                        const paymentLink = document.createElement("a");
+                        paymentLink.href = result.paymentUrl;
+                        paymentLink.target = "_blank";
+                        paymentLink.rel = "noopener noreferrer";
+                        paymentLink.textContent = "Continue to Mobile Money payment";
+                        deliveryResult.append(" ", paymentLink);
+                    }
+                    void monitorDeliveryPaymentStatus(result.orderId);
+                } else if (paymentWindow) {
+                    paymentWindow.close();
+                }
+                const customerName = deliveryCustomerInput.value;
+                const customerPhone = deliveryPhoneInput.value;
+                deliveryOrderForm.reset();
+                deliveryDateInput.min = new Date().toISOString().slice(0, 10);
+                document.getElementById("delivery-quantity").value = "1";
+                deliveryCustomerInput.value = customerName;
+                deliveryPhoneInput.value = customerPhone;
+            } catch (error) {
+                deliveryCaptchaToken = "";
+                if (deliveryCaptchaId !== null) grecaptcha.reset(deliveryCaptchaId);
+                if (paymentWindow) paymentWindow.close();
+                deliveryResult.textContent = error.message.includes("Failed to fetch")
+                    ? "Cannot connect to the order service. Start it by running node server.js in the website folder."
+                    : error.message;
+            } finally {
+                deliverySubmitButton.disabled = false;
+            }
+        });
+
+        async function monitorDeliveryPaymentStatus(orderId) {
+            const deadline = Date.now() + 5 * 60 * 1000;
+            while (Date.now() < deadline) {
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                try {
+                    const response = await fetch(`/api/orders/${orderId}/payment`, { cache: "no-store" });
+                    if (!response.ok) throw new Error("Payment status is temporarily unavailable.");
+                    const result = await response.json();
+                    if (result.paymentStatus === "paid") {
+                        deliveryResult.textContent = `Payment received for order #${orderId}. Thank you!`;
+                        return;
+                    }
+                    if (result.paymentStatus === "failed") {
+                        deliveryResult.textContent =
+                            `Payment for order #${orderId} was not completed. Your order is saved; contact the shop to arrange payment.`;
+                        return;
+                    }
+                } catch {
+                    deliveryResult.textContent = `Waiting for Mobile Money confirmation for order #${orderId}...`;
+                }
+            }
+            deliveryResult.textContent =
+                `Your order #${orderId} is saved. Payment confirmation may take a few minutes; refresh the page to check again or contact the shop.`;
+        }
 
         const coffeeBreakButton = document.getElementById("coffee-break-button");
         const coffeeBreakStatus = document.getElementById("coffee-break-status");
@@ -696,13 +1432,17 @@
                 : "Drink coffee together";
 
             coffeeGuests.forEach(function (guest) {
-                guest.querySelector(".coffee-cup-state").textContent = coffeeIsFinished
-                    ? "☕ Empty cup on the table"
-                    : "☕ Full cup";
+                const cupState = guest.querySelector(".coffee-cup-state");
+                cupState.querySelector(".coffee-cup-image").src = coffeeIsFinished
+                    ? "coffee-cup-fresh.svg"
+                    : "coffee-cup-full.svg";
+                cupState.querySelector("span").textContent = coffeeIsFinished
+                    ? "Fresh cup"
+                    : "Full cup";
             });
 
             coffeeBreakStatus.textContent = coffeeIsFinished
-                ? "Alice, Bob, and Charlie enjoyed their coffee and placed their empty cups on the table."
+                ? "Alice, Bob, and Charlie enjoyed their coffee. Fresh cups are on the table."
                 : "The cups are ready on the table.";
         });
 
@@ -767,16 +1507,21 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         name: document.getElementById("comment-name").value.trim(),
-                        message: document.getElementById("comment-message").value.trim()
+                        message: document.getElementById("comment-message").value.trim(),
+                        captchaToken: commentCaptchaToken
                     })
                 });
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.error || "Your comment could not be posted.");
 
+                commentCaptchaToken = "";
+                if (commentCaptchaId !== null) grecaptcha.reset(commentCaptchaId);
                 storyCommentForm.reset();
                 storyCommentStatus.textContent = "Your comment is now visible to everyone.";
                 await loadStoryComments();
             } catch (error) {
+                commentCaptchaToken = "";
+                if (commentCaptchaId !== null) grecaptcha.reset(commentCaptchaId);
                 storyCommentStatus.textContent = error.message.includes("Failed to fetch")
                     ? "The comment service is unavailable. Please try again later."
                     : error.message;
@@ -787,6 +1532,7 @@
 
         loadStoryComments();
     </script>
+
 </body>
 
 </html>
